@@ -23,6 +23,9 @@ public class Reserva {
 	}
 
 	public void setIdReserva(int idReserva) {
+		if (idReserva <= 0) {
+			throw new IllegalArgumentException("El iD de reserva tiene que ser mayor a 0");
+		}
 		this.idReserva = idReserva;
 	}
 
@@ -31,6 +34,9 @@ public class Reserva {
 	}
 
 	public void setDni(String dni) {
+		if (dni == null | !dni.matches("\\d{8}[A-Z]")) {
+			throw new IllegalArgumentException("El DNI tiene que tener 8 números seguidos y una letra mayúscula de la 'A-Z'.");
+		}
 		this.dni = dni;
 	}
 
