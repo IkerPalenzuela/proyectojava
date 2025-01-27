@@ -22,11 +22,11 @@ public class Aviones {
 	
 	// Metodos
 	public void agregarReserva(Reserva reserva) {
-		reserva.add(reserva);
+		Reserva.add(reserva);
 	}
 	
 	public void eliminarReserva(Reserva reserva) {
-		reserva.remove(reserva);
+		Reserva.remove(reserva);
 	}
 	
 	public ArrayList<Reserva> obtenerReservas(){
