@@ -80,4 +80,9 @@ public class Reserva {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public void remove(Reserva reserva) {
+		// TODO Auto-generated method stub
+		
+	}
 }
