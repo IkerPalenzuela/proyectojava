@@ -1,5 +1,7 @@
 package Clases;
 
+import java.util.ArrayList;
+
 public class Reserva {
 
     private int idReserva;
@@ -7,6 +9,8 @@ public class Reserva {
     private String codAvion;
     private String fechaIda;
     private String fechaVuelta;
+
+    private static ArrayList<Reserva> reservas = new ArrayList<>();
 
     // Constructor
     public Reserva(int idReserva, String dni, String codAvion, String fechaIda, String fechaVuelta) {
@@ -69,20 +73,29 @@ public class Reserva {
         this.fechaVuelta = fechaVuelta;
     }
 
-    // Métodos auxiliares
+    // Metodos
     private void validarFormatoFecha(String fecha) {
         if (fecha == null || !fecha.matches("\\d{4}-\\d{2}-\\d{2}")) {
             throw new IllegalArgumentException("La fecha debe estar en el formato 'AAAA-MM-dd'.");
         }
     }
 
-	public void add(Reserva reserva) {
-		// TODO Auto-generated method stub
-		
-	}
+    public static void add(Reserva reserva) {
+        reservas.add(reserva);
+    }
 
-	public void remove(Reserva reserva) {
-		// TODO Auto-generated method stub
-		
+    public static void remove(Reserva reserva) {
+        reservas.remove(reserva);
+    }
+
+    public static ArrayList<Reserva> getReservas() {
+        return reservas;
+    }
+
+    // toString
+    @Override
+	public String toString() {
+		return "Reserva [idReserva=" + idReserva + ", dni=" + dni + ", codAvion=" + codAvion + ", fechaIda=" + fechaIda
+				+ ", fechaVuelta=" + fechaVuelta + "]";
 	}
 }
