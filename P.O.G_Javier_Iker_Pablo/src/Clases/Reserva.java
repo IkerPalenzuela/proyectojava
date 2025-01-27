@@ -75,4 +75,9 @@ public class Reserva {
             throw new IllegalArgumentException("La fecha debe estar en el formato 'AAAA-MM-dd'.");
         }
     }
+
+	public void add(Reserva reserva) {
+		// TODO Auto-generated method stub
+		
+	}
 }
