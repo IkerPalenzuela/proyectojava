@@ -3,7 +3,7 @@ package Clases;
 public class Usuarios {
 
     // Atributos
-    private String dni;
+    private String dni; 
     private String nombre;
     private String apellido;
     private String empresa;
@@ -12,7 +12,7 @@ public class Usuarios {
 
     // Constructor
     public Usuarios(String dni, String nombre, String apellido, String empresa, String contrasena, Rol rol) {
-        this.dni = dni;
+        setDni(dni);
         this.nombre = nombre;
         this.apellido = apellido;
         this.empresa = empresa;
@@ -56,14 +56,6 @@ public class Usuarios {
         this.empresa = empresa;
     }
 
-    public boolean validarContrasena(String contrasena) {
-        return this.contrasena.equals(contrasena);
-    }
-
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
-    }
-
     public Rol getRol() {
         return rol;
     }
@@ -72,6 +64,13 @@ public class Usuarios {
         this.rol = rol;
     }
 
+    public boolean validarContrasena(String contrasena) {
+        return this.contrasena.equals(contrasena);
+    }
+
+    public String getContrasena() {
+    	return contrasena;
+    }
     // toString
     @Override
     public String toString() {
