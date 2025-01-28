@@ -30,8 +30,8 @@ public class ConectorBD {
             }
     }
 
-    // Metodo para añadir un usuario a la tabla
-    public static void añadirUsuario(Usuarios usuario) throws SQLException {
+    // Metodo para registrar un usuario a la tabla
+    public static void registrarUsuario(Usuarios usuario) throws SQLException {
         String query = "INSERT INTO Usuarios (DNI, Nombre, Apellido, Empresa, Rol, Contrasena) VALUES (?, ?, ?, ?, ?, ?)";
 
             try (PreparedStatement preparedStatement = conexion.prepareStatement(query)) {
@@ -43,7 +43,7 @@ public class ConectorBD {
                 preparedStatement.setString(6, usuario.getContrasena()); 
                 preparedStatement.executeUpdate();
                 
-                System.out.println("Usuario añadido");
+                System.out.println("Usuario registrado");
         }
     }
     
