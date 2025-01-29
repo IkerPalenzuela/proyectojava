@@ -12,10 +12,10 @@ public class Aviones {
 	protected Hangar hangar;
 	
 	// Constructor 
-	public Aviones(String fabricante, String modelo, Double millas) {
+	public Aviones(String fabricante, String modelo, Double millas2) {
 		this.fabricante = fabricante;
 		this.modelo = modelo;
-		this.millas = millas;
+		this.millas = millas2;
 		this.reserva = new ArrayList <>();
 		this.hangar = null;	
 	}

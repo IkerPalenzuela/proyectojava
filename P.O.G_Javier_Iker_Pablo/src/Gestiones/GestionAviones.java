@@ -1,7 +1,6 @@
 package Gestiones;
 
 import java.sql.*;
-
 import Clases.ConectorBD;
 import Clases.Aviones;
 
