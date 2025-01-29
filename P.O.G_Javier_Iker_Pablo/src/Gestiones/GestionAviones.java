@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import Clases.Aviones;
+import Clases.ConectorBD;
 
 public class GestionAviones {
 
@@ -13,7 +14,7 @@ public class GestionAviones {
 			System.out.println("\nLista de todos los aviones");
 			String query = "SELECT * FROM avion";
 			
-			try (Statement statement = getConexion.createStatement(); ResultSet resultSet = statement.executeQuery(query)){
+			try (Statement statement = ConectorBD.getConexion().createStatement(); ResultSet resultSet = statement.executeQuery(query)){
 				// Verificamos si hay aviones para poder mostrar
 				if(!resultSet.isBeforeFirst()) {
 					System.out.println("No se encontraron aviones para poder mostrar en la base de datos");

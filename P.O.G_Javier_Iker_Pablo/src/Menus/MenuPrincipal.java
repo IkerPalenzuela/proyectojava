@@ -15,8 +15,8 @@ public class MenuPrincipal {
 	// Menu principal
 	public int mostrarMenuPrincipal() {
 		System.out.println("\nMenú principal");
-		System.out.println("1. Registrar usuario");
-		System.out.println("2. Iniciar sesión");
+		System.out.println("1. Usuarios");
+		System.out.println("2. Aviones");
 		System.out.println("3. Salir");
 		return leerEntero();
 	}

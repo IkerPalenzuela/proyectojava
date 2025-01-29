@@ -7,12 +7,12 @@ public class Aviones {
 	// Atributos
 	protected String fabricante;
 	protected String  modelo;
-	protected Double millas;
+	protected double millas;
 	protected ArrayList<Reserva> reserva;
 	protected Hangar hangar;
 	
 	// Constructor 
-	public Aviones(String fabricante, String modelo, Double millas) {
+	public Aviones(String fabricante, String modelo, double millas) {
 		this.fabricante = fabricante;
 		this.modelo = modelo;
 		this.millas = millas;
@@ -54,11 +54,11 @@ public class Aviones {
 		this.modelo = modelo;
 	}
 
-	public Double getMillas() {
+	public double getMillas() {
 		return millas;
 	}
 
-	public void setMillas(Double millas) {
+	public void setMillas(double millas) {
 		this.millas = millas;
 	}
 
