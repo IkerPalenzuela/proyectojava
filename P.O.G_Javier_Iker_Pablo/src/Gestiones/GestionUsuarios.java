@@ -9,7 +9,7 @@ public class GestionUsuarios {
 
     // Método para registrar un usuario
     public static void registrarUsuario(Usuarios usuario) throws SQLException {
-        String query = "INSERT INTO usuario (DNI, Nombre, Apellido, Empresa, Rol, Contrasena) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Usuarios (DNI, Nombre, Apellido, Empresa, Rol, Contrasena) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement preparedStatement = ConectorBD.getConexion().prepareStatement(query)) {
             preparedStatement.setString(1, usuario.getDni());
@@ -29,7 +29,7 @@ public class GestionUsuarios {
     // Método para consultar todos los usuarios
     public static void consultarTodosLosUsuarios() throws SQLException {
         System.out.println("\nLista de todos los usuarios");
-        String query = "SELECT * FROM usuario";
+        String query = "SELECT * FROM Usuarios";
 
         try (Statement statement = ConectorBD.getConexion().createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {

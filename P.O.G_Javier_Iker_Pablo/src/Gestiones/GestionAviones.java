@@ -3,94 +3,131 @@ package Gestiones;
 import java.sql.*;
 import java.util.Scanner;
 import Clases.Aviones;
+import Clases.Carga;
 import Clases.ConectorBD;
+import Clases.Pasajeros;
 
 public class GestionAviones {
 
-    // Método para consultar aviones
-    public static void consultarTodosLosAviones(Aviones avion) throws SQLException {
-        System.out.println("\nLista de todos los aviones");
-        String query = "SELECT * FROM Avion";
+	// // Metodo para consultar los aviones
+	public static void consultarAvionesDisponibles() throws SQLException {
+	    String query = "SELECT A.CodAvion, A.Fabricante, A.Modelo, " +
+	                   "IFNULL(R.CodAvion, 'Disponible') AS EstadoReserva " +
+	                   "FROM Avion A " +
+	                   "LEFT JOIN Reserva R ON A.CodAvion = R.CodAvion";
 
-        try (Statement statement = ConectorBD.getConexion().createStatement(); ResultSet resultSet = statement.executeQuery(query)) {
-            // Verificamos si hay aviones para mostrar
-            if (!resultSet.isBeforeFirst()) {
-                System.out.println("No se encontraron aviones para mostrar en la base de datos");
-            } else {
-                while (resultSet.next()) {
-                    String fabricante = resultSet.getString("Fabricante");
-                    String modelo = resultSet.getString("Modelo");
-                    double millas = resultSet.getDouble("Rango_millas");
-                    String hangar = resultSet.getString("IdHangar");
+	    try (Statement statement = ConectorBD.getConexion().createStatement();
+	         ResultSet resultSet = statement.executeQuery(query)) {
 
-                    // Imprimimos la información del avión
-                    System.out.println("Fabricante: " + fabricante +
-                            ", Modelo: " + modelo +
-                            ", Millas: " + millas +
-                            ", Hangar: " + hangar);
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println("Error al consultar los aviones: " + e.getMessage());
-        }
-    }
+	        // Verificamos si hay aviones disponibles
+	        if (!resultSet.isBeforeFirst()) {
+	            System.out.println("No hay aviones disponibles en la base de datos.");
+	        } else {
+	            while (resultSet.next()) {
+	                // Obtenemos todos los datos del avión
+	                int codAvion = resultSet.getInt("CodAvion");
+	                String fabricante = resultSet.getString("Fabricante");
+	                String modelo = resultSet.getString("Modelo");
+	                String estado = resultSet.getString("EstadoReserva");
 
-    // Método para seleccionar un avión
-    public static void seleccionarAvion(Aviones avion) throws SQLException {
-        Scanner sc = new Scanner(System.in);
+	                System.out.println("CodAvion: " + codAvion + 
+	                                   ", Fabricante: " + fabricante + 
+	                                   ", Modelo: " + modelo + 
+	                                   ", Estado: " + (estado.equals("Disponible") ? "Disponible" : "Reservado"));
+	            }
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("Error al consultar los aviones: " + e.getMessage());
+	    }
+	}
 
-        // Mostramos los aviones disponibles
-        System.out.println("\nSelecciona un avión:");
-        String query = "SELECT CodAvion, Fabricante, Modelo FROM Avion";
+	// Metodo para reservar aviones
+	public static void reservarAviones() throws SQLException {
+	    Scanner sc = new Scanner(System.in);
 
-        try (Statement statement = ConectorBD.getConexion().createStatement(); ResultSet resultSet = statement.executeQuery(query)) {
-            // Verificamos si hay aviones disponibles
-            if (!resultSet.isBeforeFirst()) {
-                System.out.println("No hay aviones disponibles.");
-                return;
-            }
+	    // Mostramos los aviones disponibles
+	    System.out.println("\nSelecciona un avión:");
+	    String query = "SELECT CodAvion, Fabricante, Modelo, Plazas, Capacidad_kg, Rango_millas FROM Avion";
 
-            // Mostramos los aviones con sus codigos
-            System.out.println("Código\tFabricante\tModelo");
-            while (resultSet.next()) {
-                int codAvion = resultSet.getInt("CodAvion"); 
-                String fabricante = resultSet.getString("Fabricante");
-                String modelo = resultSet.getString("Modelo");
+	    try (Statement statement = ConectorBD.getConexion().createStatement(); 
+	         ResultSet resultSet = statement.executeQuery(query)) {
 
-                System.out.println(codAvion + "\t" + fabricante + "\t" + modelo);
-            }
+	        // Verificamos si hay aviones disponibles
+	        if (!resultSet.isBeforeFirst()) {
+	            System.out.println("No hay aviones disponibles.");
+	            return;
+	        }
 
-            // Solicitamos al usuario que inserte el codigo del avion
-            System.out.print("\nIntroduce el código del avión que quieres seleccionar: ");
-            int codSeleccionado = sc.nextInt();
+	        // Mostramos los aviones con sus códigos
+	        System.out.println("Código\tFabricante\tModelo");
+	        while (resultSet.next()) {
+	            int codAvion = resultSet.getInt("CodAvion");
+	            String fabricante = resultSet.getString("Fabricante");
+	            String modelo = resultSet.getString("Modelo");
 
-            // Consultamos si existe un avión con el código proporcionado
-            String checkQuery = "SELECT * FROM Avion WHERE CodAvion = ?";
-            try (PreparedStatement preparedStatement = ConectorBD.getConexion().prepareStatement(checkQuery)) {
-                preparedStatement.setInt(1, codSeleccionado);
-                ResultSet checkResultSet = preparedStatement.executeQuery();
+	            System.out.println("CodAvion: " + codAvion +
+	                               ", Fabricante: " + fabricante + 
+	                               ", Modelo: " + modelo);
+	        }
 
-                // Verificamos si el avión existe
-                if (checkResultSet.next()) {
-                    // Aquí usamos el objeto 'avion'
-                    avion.setCodigo(codSeleccionado);
-                    avion.setFabricante(checkResultSet.getString("Fabricante"));
-                    avion.setModelo(checkResultSet.getString("Modelo"));
-                    avion.setMillas(checkResultSet.getDouble("Rango_millas"));
-                    avion.setHangar(null); // Por si necesitamos insertar el hangar en el que esta (no es necesario)
+	        // Solicitamos al usuario que ponga el código del avión
+	        System.out.print("\nIntroduce el código del avión que quieres seleccionar: ");
+	        int codSeleccionado = sc.nextInt();
 
-                    System.out.println("\nAvión seleccionado:");
-                    System.out.println("Código: " + avion.getCodigo());
-                    System.out.println("Fabricante: " + avion.getFabricante());
-                    System.out.println("Modelo: " + avion.getModelo());
-                    System.out.println("Rango de Millas: " + avion.getMillas());
-                    System.out.println("Hangar: " + avion.getHangar());
-                } else {
-                    System.out.println("No se encontró un avión con el código proporcionado.");
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println("Error al consultar los aviones: " + e.getMessage());
-        }
-    }
+	        resultSet.beforeFirst();  
+	        boolean avionEncontrado = false;
+
+	        while (resultSet.next()) {
+	            // Comprobamos si el avión coincide con el código seleccionado
+	            if (resultSet.getInt("CodAvion") == codSeleccionado) {
+	                avionEncontrado = true;
+
+	                // Determinamos si es un avión de carga o de pasajeros
+	                Aviones avion = null;
+
+	                if (resultSet.getInt("Plazas") > 0) {
+	                    int plazas = resultSet.getInt("Plazas");
+	                    avion = new Pasajeros(codSeleccionado, 
+	                                          resultSet.getString("Fabricante"), 
+	                                          resultSet.getString("Modelo"), 
+	                                          resultSet.getDouble("Rango_millas"), 
+	                                          plazas);
+	                } else {
+	                    double capacidad = resultSet.getDouble("Capacidad_kg");
+	                    avion = new Carga(codSeleccionado, 
+	                                      resultSet.getString("Fabricante"), 
+	                                      resultSet.getString("Modelo"), 
+	                                      resultSet.getDouble("Rango_millas"), 
+	                                      capacidad);
+	                }
+
+	                // Ahora que hemos instanciado el avión correctamente, mostramos la información
+	                System.out.println("\nAvión seleccionado:");
+	                System.out.println("Código: " + avion.getCodigo());
+	                System.out.println("Fabricante: " + avion.getFabricante());
+	                System.out.println("Modelo: " + avion.getModelo());
+	                System.out.println("Rango de Millas: " + avion.getMillas());
+	                System.out.println("Hangar: " + avion.getHangar());
+
+	                // Verificamos el tipo de avión y mostramos atributos específicos
+	                if (avion instanceof Pasajeros) {
+	                    System.out.println("Plazas: " + ((Pasajeros) avion).getPlazas());
+	                } else if (avion instanceof Carga) {
+	                    System.out.println("Capacidad de carga: " + ((Carga) avion).getCapacidad());
+	                }
+
+	                break;
+	            }
+	        }
+
+	        if (!avionEncontrado) {
+	            System.out.println("No se encontró un avión con el código proporcionado.");
+	        }
+
+	    } catch (SQLException e) {
+	        System.out.println("Error al consultar los aviones: " + e.getMessage());
+	    }
+	}
+
+
 }
