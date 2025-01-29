@@ -63,6 +63,6 @@ public class GestionUsuarios {
             System.out.println("Error al consultar los usuarios: " + e.getMessage());
             e.printStackTrace();
         }
-        // aaaa
+        // aaaaa
     }
 }
