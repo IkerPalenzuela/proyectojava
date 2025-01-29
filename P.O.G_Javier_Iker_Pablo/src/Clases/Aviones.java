@@ -4,78 +4,85 @@ import java.util.ArrayList;
 
 public class Aviones {
 
-	// Atributos
-	protected String fabricante;
-	protected String  modelo;
-	protected double millas;
-	protected ArrayList<Reserva> reserva;
-	protected Hangar hangar;
-	
-	// Constructor 
-	public Aviones(String fabricante, String modelo, double millas) {
-		this.fabricante = fabricante;
-		this.modelo = modelo;
-		this.millas = millas;
-		this.reserva = new ArrayList <>();
-		this.hangar = null;	
-	}
-	
-	// Metodos
-	public void agregarReserva(Reserva reserva) {
-		Reserva.add(reserva);
-	}
-	
-	public void eliminarReserva(Reserva reserva) {
-		Reserva.remove(reserva);
-	}
-	
-	public ArrayList<Reserva> obtenerReservas(){
-		return reserva;
-	}
-	
-	 public void asignarHangar(Hangar hangar) {
-		 this.hangar = hangar;
-	 }
+    // Atributos
+    protected int codigo;
+    protected String fabricante;
+    protected String modelo;
+    protected double millas;
+    protected ArrayList<Reserva> reserva;
+    protected Hangar hangar;
 
-	 // Getters & Setters
-	 public String getFabricante() {
-		return fabricante;
-	}
+    // Constructor
+    public Aviones(int codigo, String fabricante, String modelo, double millas) {
+        this.codigo = codigo;
+        this.fabricante = fabricante;
+        this.modelo = modelo;
+        this.millas = millas;
+        this.reserva = new ArrayList<>();
+        this.hangar = null;
+    }
 
-	public void setFabricante(String fabricante) {
-		this.fabricante = fabricante;
-	}
+    // Métodos
+    public void agregarReserva(Reserva reserva) {
+        this.reserva.add(reserva); 
+    }
 
-	public String getModelo() {
-		return modelo;
-	}
+    public void eliminarReserva(Reserva reserva) {
+        this.reserva.remove(reserva);
+    }
 
-	public void setModelo(String modelo) {
-		this.modelo = modelo;
-	}
+    public ArrayList<Reserva> obtenerReservas() {
+        return reserva;
+    }
 
-	public double getMillas() {
-		return millas;
-	}
+    public void asignarHangar(Hangar hangar) {
+        this.hangar = hangar;
+    }
 
-	public void setMillas(double millas) {
-		this.millas = millas;
-	}
+    // Getters & Setters
+    public int getCodigo() {
+        return codigo;
+    }
 
-	public Hangar getHangar() {
-		return hangar;
-	}
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
 
-	public void setHangar(Hangar hangar) {
-		this.hangar = hangar;
-	}
+    public String getFabricante() {
+        return fabricante;
+    }
 
-	// toString
-	@Override
-	public String toString() {
-		return "Aviones [fabricante=" + fabricante + ", modelo=" + modelo + ", millas=" + millas + ", hangar=" + hangar
-				+ "]";
-	}
-		
-	
+    public void setFabricante(String fabricante) {
+        this.fabricante = fabricante;
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public double getMillas() {
+        return millas;
+    }
+
+    public void setMillas(double millas) {
+        this.millas = millas;
+    }
+
+    public Hangar getHangar() {
+        return hangar;
+    }
+
+    public void setHangar(Hangar hangar) {
+        this.hangar = hangar;
+    }
+
+    // toString
+    @Override
+    public String toString() {
+        return "Aviones [codigo=" + codigo + ", fabricante=" + fabricante + ", modelo=" + modelo + ", millas=" + millas + ", hangar=" + hangar + "]";
+    }
 }

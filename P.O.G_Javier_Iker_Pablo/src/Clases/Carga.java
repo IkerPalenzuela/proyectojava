@@ -5,8 +5,8 @@ public class Carga extends Aviones{
 	 private double capacidad;
 
 	    // Constructor
-	    public Carga(String fabricante, String modelo, double millas, double capacidad) {
-	        super(fabricante, modelo, millas);
+	    public Carga(int codigo, String fabricante, String modelo, double millas, double capacidad) {
+	        super(codigo, fabricante, modelo, millas);
 	        setCapacidad(capacidad);
 	    }
 

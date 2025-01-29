@@ -20,7 +20,7 @@ public class Usuarios {
         this.rol = rol;
     }
 
-    // Getters y Setters
+	// Getters y Setters
     public String getDni() {
         return dni;
     }
