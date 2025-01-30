@@ -10,15 +10,17 @@ public class Aviones {
     protected String modelo;
     protected double millas;
     protected ArrayList<Reserva> reserva;
+    protected double precio;
     protected Hangar hangar;
 
     // Constructor
-    public Aviones(int codigo, String fabricante, String modelo, double millas) {
+    public Aviones(int codigo, String fabricante, String modelo, double precio, double millas) {
         this.codigo = codigo;
         this.fabricante = fabricante;
         this.modelo = modelo;
         this.millas = millas;
         this.reserva = new ArrayList<>();
+        this.precio = precio;
         this.hangar = null;
     }
 
@@ -64,6 +66,13 @@ public class Aviones {
         this.modelo = modelo;
     }
 
+    public double getPrecio() {
+    	return precio;
+    }
+    
+    public void setPrecio(double precio) {
+    	this.precio = precio;
+    }
     public double getMillas() {
         return millas;
     }
@@ -82,7 +91,12 @@ public class Aviones {
 
     // toString
     @Override
-    public String toString() {
-        return "Aviones [codigo=" + codigo + ", fabricante=" + fabricante + ", modelo=" + modelo + ", millas=" + millas + ", hangar=" + hangar + "]";
-    }
+	public String toString() {
+		return "Aviones [codigo=" + codigo + ", fabricante=" + fabricante + ", modelo=" + modelo + ", millas=" + millas
+				+ ", reserva=" + reserva + ", precio=" + precio + ", hangar=" + hangar + ", obtenerReservas()="
+				+ obtenerReservas() + ", getCodigo()=" + getCodigo() + ", getFabricante()=" + getFabricante()
+				+ ", getModelo()=" + getModelo() + ", getprecio()=" + getPrecio() + ", getMillas()=" + getMillas()
+				+ ", getHangar()=" + getHangar() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
+	}
 }

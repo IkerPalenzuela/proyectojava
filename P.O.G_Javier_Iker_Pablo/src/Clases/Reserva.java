@@ -21,6 +21,13 @@ public class Reserva {
         setFechaVuelta(fechaVuelta);
     }
 
+    public Reserva(int idReserva) {
+    	this.idReserva = idReserva;
+    	this.dni = null;
+    	this.codAvion = 0;
+    	this.fechaIda = null;
+    	this.fechaVuelta = null;
+    }
     // Getters & Setters
     public int getIdReserva() {
         return idReserva;

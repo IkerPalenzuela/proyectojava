@@ -1,9 +1,11 @@
 package Menus;
 
 import java.util.Scanner;
+import java.sql.*;
+
 public class MenuAviones {
 
-	private Scanner sc;
+	private static Scanner sc;
 	
 	// Constructor
 	public MenuAviones() {
@@ -11,15 +13,16 @@ public class MenuAviones {
 	}
 	
 	// Menu aviones
-	public int mostrarMenuAviones() {
+	public static int mostrarMenuAviones() {
 		System.out.println("\nMenú aviones");
 		System.out.println("1. Consultar aviones");
-		System.out.println("2. Seleccionar avion");
-		System.out.println("3. Salir");
+		System.out.println("2. Reservar avion");
+		System.out.println("3. Volver atras");
 		return leerEntero();
 	}
 	
-	public int leerEntero() {
+	
+	public static int leerEntero() {
 		while (true) {
 			try {
 				return Integer.parseInt(sc.nextLine());

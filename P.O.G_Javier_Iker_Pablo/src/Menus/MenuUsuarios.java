@@ -1,8 +1,10 @@
 package Menus;
 
-import java.util.Scanner;
+import Gestiones.GestionUsuarios;
 import Clases.Usuarios;
 import Clases.Rol;
+import java.util.Scanner;
+import java.sql.*;
 
 public class MenuUsuarios {
 
@@ -13,17 +15,98 @@ public class MenuUsuarios {
         this.sc = new Scanner(System.in);
     }
 
-    // Menú principal
-    public int mostrarMenuPrincipal() {
-        System.out.println("\nMenú principal");
-        System.out.println("1. Registrar usuario");
-        System.out.println("2. Iniciar sesión");
-        System.out.println("3. Salir");
-        return leerEntero();
+ // Método que muestra el menú de usuarios
+    public void mostrarMenuUsuarios() {
+        boolean volverAtras = false;
+        while (!volverAtras) {
+            System.out.println("\nMenú de Usuarios");
+            System.out.println("1. Registrar usuario");
+            System.out.println("2. Consultar usuarios");
+            System.out.println("3. Iniciar sesión");
+            System.out.println("4. Volver atrás");
+            System.out.print("Seleccione una opción: ");
+
+            int opcion = leerEntero();
+
+            switch (opcion) {
+                case 1:
+                    registrarUsuario();  // Llamar a registrarUsuario() para crear y registrar el usuario
+                    break;
+                case 2:
+                    try {
+                        GestionUsuarios.consultarTodosLosUsuarios(); // Consulta todos los usuarios
+                    } catch (SQLException e) {
+                        System.out.println("Error al consultar los usuarios: " + e.getMessage());
+                    }
+                    break;
+                case 3:
+                    // Llamar directamente a iniciarSesion sin try-catch para SQLException
+                    GestionUsuarios.iniciarSesion(); // Este método maneja internamente cualquier SQLException
+                    break;
+                case 4:
+                    volverAtras = true; // Regresar al menú principal
+                    break;
+                default:
+                    System.out.println("Opción no válida. Intente nuevamente.");
+            }
+        }
     }
 
-    // Leer un número entero con manejo de errores
-    public int leerEntero() {
+
+    // Método para registrar un usuario
+    private void registrarUsuario() {
+        // Recoger los datos del usuario
+        System.out.print("Inserta el DNI: ");
+        String dni = sc.nextLine();
+
+        System.out.print("Inserta el nombre: ");
+        String nombre = sc.nextLine();
+
+        System.out.print("Inserta el apellido: ");
+        String apellido = sc.nextLine();
+
+        System.out.print("Inserta la empresa (puede ser null si no perteneces a ninguna): ");
+        String empresa = sc.nextLine();
+
+        // Esto es para obtener el rol bien sea ADMINISTRADOR o CLIENTE
+        Rol rol = obtenerRol();
+
+        System.out.print("Inserta la contraseña: ");
+        String contrasena = sc.nextLine();
+
+        Usuarios nuevoUsuario = new Usuarios(dni, nombre, apellido, empresa, contrasena, rol);
+
+        try {
+            GestionUsuarios.registrarUsuario(nuevoUsuario);
+        } catch (SQLException e) {
+            System.out.println("Error al registrar el usuario: " + e.getMessage());
+        }
+    }
+
+
+ // Método para obtener el rol del usuario
+    private Rol obtenerRol() {
+        Rol rol = null;
+        while (rol == null) {
+            System.out.println("Selecciona el rol del usuario (1. ADMINISTRADOR, 2. CLIENTE): ");
+            int opcionRol = leerEntero();
+            switch (opcionRol) {
+                case 1:
+                    rol = Rol.ADMINISTRADOR;  // Asignamos el rol de ADMINISTRADOR
+                    break;
+                case 2:
+                    rol = Rol.CLIENTE;  // Asignamos el rol de CLIENTE
+                    break;
+                default:
+                    System.out.println("Opción no válida. Intente nuevamente.");
+            }
+        }
+        return rol;
+    }
+
+
+    // Método para leer un número entero con control de errores
+    private int leerEntero() {
         while (true) {
             try {
                 return Integer.parseInt(sc.nextLine());
@@ -31,56 +114,5 @@ public class MenuUsuarios {
                 System.out.println("Error: Por favor, introduce un número válido.");
             }
         }
-    }
-
-    // Leer texto
-    public String leerTexto() {
-        return sc.nextLine();
-    }
-
-    // Método para leer los datos de un nuevo usuario
-    public Usuarios leerDatosUsuario() {
-        System.out.println("\nAñadir un nuevo usuario");
-
-        System.out.print("Ingrese el DNI (8 números y 1 letra): ");
-        String dni = leerTexto();
-
-        System.out.print("Ingrese el nombre: ");
-        String nombre = leerTexto();
-
-        System.out.print("Ingrese el apellido: ");
-        String apellido = leerTexto();
-
-        System.out.print("Ingrese la empresa: ");
-        String empresa = leerTexto();
-
-        System.out.print("Ingrese la contraseña: ");
-        String contrasena = leerTexto();
-
-        System.out.println("Seleccione el rol (1. ADMININSTRADOR, 2. CLIENTE): ");
-        Rol rol = seleccionarRol();
-
-        // Retornar el objeto con los datos ingresados
-        return new Usuarios(dni, nombre, apellido, empresa, contrasena, rol);
-    }
-
-    // Método para seleccionar un rol
-    public Rol seleccionarRol() {
-        while (true) {
-            int opcion = leerEntero();
-            switch (opcion) {
-                case 1:
-                    return Rol.ADMINISTRADOR;
-                case 2:
-                    return Rol.CLIENTE;
-                default:
-                    System.out.println("Opción invalid. Inserta 1 si eres administrador o 2 si eres cliente");
-            }
-        }
-    }
-    
-    // Metodo de error
-    public void mostrarError(String mensaje) {
-    	System.out.println("Error: " + mensaje);
     }
 }
