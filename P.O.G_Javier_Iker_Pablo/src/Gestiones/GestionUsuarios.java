@@ -74,7 +74,7 @@ public class GestionUsuarios {
             String contrasena = sc.nextLine();
 
             // Consultamos en la base de datos para saber si estan los datos insertados
-            String query = "SELECT * FROM usuario WHERE Nombre = ? AND Contrasena = ?";
+            String query = "SELECT * FROM Usuarios WHERE Nombre = ? AND Contrasena = ?";
 
             try (PreparedStatement statement = ConectorBD.getConexion().prepareStatement(query)) {
                 statement.setString(1, nombre);
