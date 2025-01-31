@@ -11,12 +11,14 @@ public class GestionAviones {
 
     // Método para consultar los aviones disponibles
     public static void consultarAvionesDisponibles() throws SQLException {
-        String query = "SELECT a.CodAvion, a.Fabricante, a.Modelo, " +
-                        "CASE " +
-                        "WHEN r.CodAvion IS NULL THEN 'Disponible' " +
-                        "ELSE 'Reservado' " +
-                        "END AS EstadoReserva " +
-                        "FROM Avion a LEFT JOIN Reserva r ON a.CodAvion = r.CodAvion";
+        String query = "SELECT a.CodAvion, a.Fabricante, a.Modelo, a.Precio AS precio_dia, r.fechaIda, r.fechaVuelta," +
+		        	    	"CASE" +
+		                		"WHEN r.CodAvion IS NULL THEN 'Disponible'" +
+		                		"ELSE 'Reservado'" +
+		                	"END AS EstadoReserva" +
+		                "FROM Avion a" +
+		                "LEFT JOIN Reserva r ON a.CodAvion = r.CodAvion";
+;
 
         try (Statement statement = ConectorBD.getConexion().createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {

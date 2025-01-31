@@ -8,7 +8,7 @@ public class GestionReservas {
 
     // Metodo para hacer reserva
 	public static void hacerReserva(Reserva reserva) throws SQLException{
-		String query = "INSERT INTO (IdReserva, FechaIda, FechaVuelta, DNI, CodAvion) VALUES (?, ?, ?, ?, ?)";
+		String query = "INSERT INTO (IdReserva, DNI, CodAvion, FechaIda, FechaVuelta) VALUES (?, ?, ?, ?, ?)";
 		
 		 try (PreparedStatement preparedStatement = ConectorBD.getConexion().prepareStatement(query)) {
 	            preparedStatement.setInt(1, reserva.getIdReserva());

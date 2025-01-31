@@ -15,10 +15,10 @@ public class Main {
             menu.iniciarMenu();  // Llamamos al método que maneja el menú principal
         } catch (Exception e) {
             // En caso de error con la conexión o el menú, mostramos el mensaje
-            System.out.println("Error al conectar con la base de datos o al iniciar el menú: " + e.getMessage());
+            System.out.println("Error al conectar con la base de datos: " + e.getMessage());
         }
 
-        // Cerramos la conexión a la base de datos después de que se termine de ejecutar el menú
+        // Cerramos la conexion a la base de datos después de que se termine de ejecutar el menú
         try {
             ConectorBD.cerrarConexion();
         } catch (Exception e) {
