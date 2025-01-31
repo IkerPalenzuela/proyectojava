@@ -12,18 +12,12 @@ public class GestionAviones {
     // Método para consultar los aviones disponibles
     public static void consultarAvionesDisponibles() throws SQLException {
         String query = "SELECT a.CodAvion, a.Fabricante, a.Modelo, " +
-                       "CASE"
-                       + 	"WHEN r.CodAvion IS NULL THEN 'Disponible'"
-                       +	"ELSE 'Reservado'";
+                        "CASE " +
+                        "WHEN r.CodAvion IS NULL THEN 'Disponible' " +
+                        "ELSE 'Reservado' " +
+                        "END AS EstadoReserva " +
+                        "FROM Avion a LEFT JOIN Reserva r ON a.CodAvion = r.CodAvion";
 
-        /*SELECT A.CodAvion, A.Fabricante, A.Modelo, 
-       CASE 
-           WHEN R.CodAvion IS NULL THEN 'Disponible'
-           ELSE 'Reservado'
-       END AS EstadoReserva
-FROM Avion A
-LEFT JOIN Reserva R ON A.CodAvion = R.CodAvion;
-*/
         try (Statement statement = ConectorBD.getConexion().createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
 
@@ -32,15 +26,17 @@ LEFT JOIN Reserva R ON A.CodAvion = R.CodAvion;
                 System.out.println("No hay aviones disponibles en la base de datos.");
             } else {
                 while (resultSet.next()) {
+                    // Obtenemos los datos del avión
                     int codAvion = resultSet.getInt("CodAvion");
                     String fabricante = resultSet.getString("Fabricante");
                     String modelo = resultSet.getString("Modelo");
-                    int estado = resultSet.getInt("EstadoReserva");
+                    String estado = resultSet.getString("EstadoReserva");
 
+                    // Mostramos los datos del avión
                     System.out.println("CodAvion: " + codAvion + 
                                        ", Fabricante: " + fabricante + 
                                        ", Modelo: " + modelo + 
-                                       ", Estado: " + (estado == 0 ? "Disponible" : "Reservado"));
+                                       ", Estado: " + estado);
                 }
             }
         } catch (SQLException e) {
@@ -56,7 +52,7 @@ LEFT JOIN Reserva R ON A.CodAvion = R.CodAvion;
         System.out.println("\nSelecciona un avión:");
         String query = "SELECT CodAvion, Fabricante, Modelo, Plazas, Capacidad_kg, Rango_millas, Precio FROM Avion";
 
-        try (Statement statement = ConectorBD.getConexion().createStatement(); 
+        try (Statement statement = ConectorBD.getConexion().createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
 
             // Verificamos si hay aviones disponibles
@@ -65,13 +61,13 @@ LEFT JOIN Reserva R ON A.CodAvion = R.CodAvion;
                 return;
             }
 
-            // Mostramos los aviones con sus códigos
-            System.out.println("Código\tFabricante\tModelo");
+            // Obtenemos los datos del avión
             while (resultSet.next()) {
                 int codAvion = resultSet.getInt("CodAvion");
                 String fabricante = resultSet.getString("Fabricante");
                 String modelo = resultSet.getString("Modelo");
 
+                // Mostramos los datos del avión
                 System.out.println("CodAvion: " + codAvion +
                                    ", Fabricante: " + fabricante + 
                                    ", Modelo: " + modelo);
@@ -80,7 +76,7 @@ LEFT JOIN Reserva R ON A.CodAvion = R.CodAvion;
             // Solicitamos al usuario que ponga el código del avión
             System.out.print("\nIntroduce el código del avión que quieres seleccionar: ");
             int codSeleccionado = sc.nextInt();
-            sc.nextLine(); // Consumir salto de línea
+            sc.nextLine();
 
             resultSet.beforeFirst();  
             boolean avionEncontrado = false;
@@ -89,8 +85,8 @@ LEFT JOIN Reserva R ON A.CodAvion = R.CodAvion;
                 if (resultSet.getInt("CodAvion") == codSeleccionado) {
                     avionEncontrado = true;
 
-                    // Determinamos si es un avión de carga o de pasajeros
-                    Aviones avion = null;
+                    // Miramos si es un avión de carga o de pasajeros
+                    Aviones avion;
                     String fabricante = resultSet.getString("Fabricante");
                     String modelo = resultSet.getString("Modelo");
                     double millas = resultSet.getDouble("Rango_millas");
@@ -128,8 +124,6 @@ LEFT JOIN Reserva R ON A.CodAvion = R.CodAvion;
 
         } catch (SQLException e) {
             System.out.println("Error al consultar los aviones: " + e.getMessage());
-        } finally {
-            sc.close(); // Cerramos el Scanner
         }
     }
 }
