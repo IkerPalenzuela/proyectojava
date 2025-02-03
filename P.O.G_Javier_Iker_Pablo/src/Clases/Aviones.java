@@ -12,10 +12,17 @@ public class Aviones {
 	protected Hangar hangar;
 	
 	// Constructor 
+<<<<<<< HEAD
 	public Aviones(String fabricante, String modelo, Double millas2) {
 		this.fabricante = fabricante;
 		this.modelo = modelo;
 		this.millas = millas2;
+=======
+	public Aviones(String fabricante, String modelo, Double millas) {
+		this.fabricante = fabricante;
+		this.modelo = modelo;
+		this.millas = millas;
+>>>>>>> branch 'master' of https://github.com/IkerPalenzuela/proyectojava.git
 		this.reserva = new ArrayList <>();
 		this.hangar = null;	
 	}

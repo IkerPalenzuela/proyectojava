@@ -1,5 +1,6 @@
 package Clases;
 
+<<<<<<< HEAD
 public class Carga extends Aviones{
 
 	private double capacidad;
@@ -20,3 +21,8 @@ public class Carga extends Aviones{
     }
 }
 
+=======
+public class Carga {
+
+}
+>>>>>>> branch 'master' of https://github.com/IkerPalenzuela/proyectojava.git

@@ -1,5 +1,6 @@
 package Clases;
 
+<<<<<<< HEAD
 public class Pasajeros extends Aviones{
 
 	   private int plazas;
@@ -18,5 +19,8 @@ public class Pasajeros extends Aviones{
 	    public void setPlazas(int plazas) {
 	        this.plazas = plazas;
 	    }
+=======
+public class Pasajeros {
+>>>>>>> branch 'master' of https://github.com/IkerPalenzuela/proyectojava.git
 
 }
