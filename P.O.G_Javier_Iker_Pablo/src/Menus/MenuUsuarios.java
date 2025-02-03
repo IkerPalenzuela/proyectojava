@@ -30,24 +30,23 @@ public class MenuUsuarios {
 
             switch (opcion) {
                 case 1:
-                    registrarUsuario();  // Llamar a registrarUsuario() para crear y registrar el usuario
+                    registrarUsuario();
                     break;
                 case 2:
                     try {
-                        GestionUsuarios.consultarTodosLosUsuarios(); // Consulta todos los usuarios
+                        GestionUsuarios.consultarTodosLosUsuarios();
                     } catch (SQLException e) {
                         System.out.println("Error al consultar los usuarios: " + e.getMessage());
                     }
                     break;
                 case 3:
-                    // Llamar directamente a iniciarSesion sin try-catch para SQLException
-                    GestionUsuarios.iniciarSesion(); // Este método maneja internamente cualquier SQLException
+                    GestionUsuarios.iniciarSesion();
                     break;
                 case 4:
-                    volverAtras = true; // Regresar al menú principal
+                    volverAtras = true;
                     break;
                 default:
-                    System.out.println("Opción no válida. Intente nuevamente.");
+                    System.out.println("Error: Inserta un número válido");
             }
         }
     }
@@ -55,7 +54,6 @@ public class MenuUsuarios {
 
     // Método para registrar un usuario
     private void registrarUsuario() {
-        // Recoger los datos del usuario
         System.out.print("Inserta el DNI: ");
         String dni = sc.nextLine();
 
@@ -92,10 +90,10 @@ public class MenuUsuarios {
             int opcionRol = leerEntero();
             switch (opcionRol) {
                 case 1:
-                    rol = Rol.ADMINISTRADOR;  // Asignamos el rol de ADMINISTRADOR
+                    rol = Rol.ADMINISTRADOR;
                     break;
                 case 2:
-                    rol = Rol.CLIENTE;  // Asignamos el rol de CLIENTE
+                    rol = Rol.CLIENTE;
                     break;
                 default:
                     System.out.println("Opción no válida. Intente nuevamente.");
@@ -105,7 +103,7 @@ public class MenuUsuarios {
     }
 
 
-    // Método para leer un número entero con control de errores
+    // Método para leer un número entero
     private int leerEntero() {
         while (true) {
             try {

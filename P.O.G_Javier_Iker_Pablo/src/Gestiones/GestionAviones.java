@@ -10,15 +10,14 @@ import Clases.Pasajeros;
 public class GestionAviones {
 
     // Método para consultar los aviones disponibles
-    public static void consultarAvionesDisponibles() throws SQLException {
-        String query = "SELECT a.CodAvion, a.Fabricante, a.Modelo, a.Precio AS precio_dia, r.fechaIda, r.fechaVuelta," +
-		        	    	"CASE" +
-		                		"WHEN r.CodAvion IS NULL THEN 'Disponible'" +
-		                		"ELSE 'Reservado'" +
-		                	"END AS EstadoReserva" +
-		                "FROM Avion a" +
-		                "LEFT JOIN Reserva r ON a.CodAvion = r.CodAvion";
-;
+	public static void consultarAvionesDisponibles() throws SQLException {
+	    String query = "SELECT a.CodAvion, a.Fabricante, a.Modelo, a.Precio, r.fechaIda, r.fechaVuelta, " +
+		                   "CASE " +
+			                   "WHEN r.FechaIda IS NULL THEN 'Disponible' " +
+			                   "ELSE 'Reservado' " +
+		                   "END AS EstadoReserva " +
+	                   "FROM Avion a " +
+	                   "LEFT JOIN Reserva r ON a.CodAvion = r.CodAvion";
 
         try (Statement statement = ConectorBD.getConexion().createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
@@ -52,7 +51,7 @@ public class GestionAviones {
 
         // Mostramos los aviones disponibles
         System.out.println("\nSelecciona un avión:");
-        String query = "SELECT CodAvion, Fabricante, Modelo, Plazas, Capacidad_kg, Rango_millas, Precio FROM Avion";
+        String query = "INSERT INTO Reserva (IdReserva, DNI, CodAvion, FechaIda, FechaVuelta) VALUES (?, ?, ?, ?, ?)";
 
         try (Statement statement = ConectorBD.getConexion().createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
