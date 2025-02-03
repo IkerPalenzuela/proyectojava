@@ -1,6 +1,5 @@
 package Gestiones;
 
-import Menus.MenuPrincipal;
 import Clases.ConectorBD;  // Importamos la clase que maneja la conexión
 
 public class Main {
@@ -9,10 +8,7 @@ public class Main {
         try {
             // Conectamos a la base de datos
             ConectorBD.conectar();
-
-            // Iniciamos el menú principal
-            MenuPrincipal menu = new MenuPrincipal();
-            menu.iniciarMenu();  // Llamamos al método que maneja el menú principal
+            // Llamamos al método que maneja el menú principal
         } catch (Exception e) {
             // En caso de error con la conexión o el menú, mostramos el mensaje
             System.out.println("Error al conectar con la base de datos: " + e.getMessage());

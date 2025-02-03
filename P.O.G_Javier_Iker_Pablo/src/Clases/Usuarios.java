@@ -3,25 +3,25 @@ package Clases;
 public class Usuarios {
 
     // Atributos
-    private String dni; 
-    private String nombre;
-    private String apellido;
-    private String empresa;
-    private String contrasena;
-    private Rol rol;
+    private static String dni; 
+    private static String nombre;
+    private static String apellido;
+    private static String empresa;
+    private static String contrasena;
+    private static Rol rol;
 
     // Constructor
     public Usuarios(String dni, String nombre, String apellido, String empresa, String contrasena, Rol rol) {
         setDni(dni);
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.empresa = empresa;
-        this.contrasena = contrasena;
-        this.rol = rol;
+        Usuarios.nombre = nombre;
+        Usuarios.apellido = apellido;
+        Usuarios.empresa = empresa;
+        Usuarios.contrasena = contrasena;
+        Usuarios.rol = rol;
     }
 
 	// Getters y Setters
-    public String getDni() {
+    public static String getDni() {
         return dni;
     }
 
@@ -29,46 +29,46 @@ public class Usuarios {
         if (dni == null || !dni.matches("\\d{8}[A-Za-z]")) {
             throw new IllegalArgumentException("El DNI tiene que tener 8 números y una letra de la 'A-Z'.");
         }
-        this.dni = dni;
+        Usuarios.dni = dni;
     }
 
-    public String getNombre() {
+    public static String getNombre() {
         return nombre;
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        Usuarios.nombre = nombre;
     }
 
-    public String getApellido() {
+    public static String getApellido() {
         return apellido;
     }
 
     public void setApellido(String apellido) {
-        this.apellido = apellido;
+        Usuarios.apellido = apellido;
     }
 
-    public String getEmpresa() {
+    public static String getEmpresa() {
         return empresa;
     }
 
     public void setEmpresa(String empresa) {
-        this.empresa = empresa;
+        Usuarios.empresa = empresa;
     }
 
-    public Rol getRol() {
+    public static Rol getRol() {
         return rol;
     }
 
     public void setRol(Rol rol) {
-        this.rol = rol;
+        Usuarios.rol = rol;
     }
 
     public boolean validarContrasena(String contrasena) {
-        return this.contrasena.equals(contrasena);
+        return Usuarios.contrasena.equals(contrasena);
     }
 
-    public String getContrasena() {
+    public static String getContrasena() {
     	return contrasena;
     }
     // toString

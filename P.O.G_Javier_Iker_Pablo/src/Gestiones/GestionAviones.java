@@ -6,9 +6,35 @@ import Clases.Aviones;
 import Clases.Carga;
 import Clases.ConectorBD;
 import Clases.Pasajeros;
+import Clases.Hangar;
 
 public class GestionAviones {
-
+	
+	// Metodo para mostrar los hangares
+	public static void mostrarHangares() throws SQLException{
+		String query = "SELECT * FROM hangar";
+				
+		try (Statement statement = ConectorBD.getConexion().createStatement();
+	             ResultSet resultSet = statement.executeQuery(query)) {
+			if(!resultSet.isBeforeFirst()) {
+				System.out.println("No hay ningun hangar para mostrar");
+			}else {
+				while(resultSet.next()) {
+					String idHangar = resultSet.getString("idHangar");
+					int capacidadAviones = resultSet.getInt("CapacidaAviones");
+					String localidad = resultSet.getString("Localidad");
+					
+					System.out.println("IdHangar: " + idHangar +
+									    ", Capacidad de aviones: " + capacidadAviones + 
+									    ", Localidad: " + localidad);
+				}
+			}
+		}catch(SQLException e) {
+			System.out.println("Error al consultar los hangares: " + e.getMessage());
+		}
+	}
+	
+	
     // Método para consultar los aviones disponibles
 	public static void consultarAvionesDisponibles() throws SQLException {
 	    String query = "SELECT a.CodAvion, a.Fabricante, a.Modelo, a.Precio, r.fechaIda, r.fechaVuelta, " +
@@ -51,7 +77,7 @@ public class GestionAviones {
 
         // Mostramos los aviones disponibles
         System.out.println("\nSelecciona un avión:");
-        String query = "INSERT INTO Reserva (IdReserva, DNI, CodAvion, FechaIda, FechaVuelta) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Reserva (DNI, CodAvion, FechaIda, FechaVuelta) VALUES (?, ?, ?, ?, ?)";
 
         try (Statement statement = ConectorBD.getConexion().createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {

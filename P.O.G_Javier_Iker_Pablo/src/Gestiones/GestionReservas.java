@@ -8,10 +8,9 @@ public class GestionReservas {
 
     // Metodo para hacer reserva
 	public static void hacerReserva(Reserva reserva) throws SQLException{
-		String query = "INSERT INTO (IdReserva, DNI, CodAvion, FechaIda, FechaVuelta) VALUES (?, ?, ?, ?, ?)";
+		String query = "INSERT INTO (DNI, CodAvion, FechaIda, FechaVuelta) VALUES (?, ?, ?, ?, ?)";
 		
 		 try (PreparedStatement preparedStatement = ConectorBD.getConexion().prepareStatement(query)) {
-	            preparedStatement.setInt(1, reserva.getIdReserva());
 	            preparedStatement.setString(2, reserva.getDni());
 	            preparedStatement.setInt(3, reserva.getCodAvion());
 	            preparedStatement.setString(4, reserva.getFechaIda());
@@ -26,7 +25,7 @@ public class GestionReservas {
 	
 	// Metodo para consultar la reserva
 	public static void consultarReserva(Reserva reserva) throws SQLException{
-		String query = "SELECT * FROM Reserva WHERE IdReserva = ?";
+		String query = "SELECT * FROM Reserva WHERE DNI = ?";
 		
 		try (Statement statement = ConectorBD.getConexion().createStatement()) {
 			ResultSet resultSet = statement.executeQuery(query);
