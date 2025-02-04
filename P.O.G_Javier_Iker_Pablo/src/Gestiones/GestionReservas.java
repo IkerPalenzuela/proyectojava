@@ -23,6 +23,14 @@ public class GestionReservas {
 	        }
 	    }
 	
+	// Metodo para consultar todas las reservas
+	public static void consultarTodasReservas() throws SQLException{
+		String query = "SELECT r.idreserva, r.fechaida, r.fechaida, r.dni, r.codavion, a.fabricante, a.modelo, a.rango_millas, a.precio, a.capacidad_kg, a.plazas, h.localidad " +
+						"FROM reserva r JOIN avion a on r.codavion = a.codavion " +
+						"JOIN hangar h on a.idhangar = h.idhangar";
+		
+		
+	}
 	// Metodo para consultar la reserva
 	public static void consultarReserva(Reserva reserva) throws SQLException{
 		String query = "SELECT * FROM Reserva WHERE DNI = ?";

@@ -6,42 +6,12 @@ import Clases.Aviones;
 import Clases.Carga;
 import Clases.ConectorBD;
 import Clases.Pasajeros;
-import Clases.Hangar;
 
-public class GestionAviones {
-	
-	// Metodo para mostrar los hangares
-	public static void mostrarHangares() throws SQLException{
-		String query = "SELECT * FROM hangar";
-				
-		try (Statement statement = ConectorBD.getConexion().createStatement();
-	             ResultSet resultSet = statement.executeQuery(query)) {
-			if(!resultSet.isBeforeFirst()) {
-				System.out.println("No hay ningun hangar para mostrar");
-			}else {
-				while(resultSet.next()) {
-					String idHangar = resultSet.getString("idHangar");
-					int capacidadAviones = resultSet.getInt("CapacidaAviones");
-					String localidad = resultSet.getString("Localidad");
-					
-					System.out.println("IdHangar: " + idHangar +
-									    ", Capacidad de aviones: " + capacidadAviones + 
-									    ", Localidad: " + localidad);
-				}
-			}
-		}catch(SQLException e) {
-			System.out.println("Error al consultar los hangares: " + e.getMessage());
-		}
-	}
-	
-	
+public class GestionAviones{	
     // Método para consultar los aviones disponibles
 	public static void consultarAvionesDisponibles() throws SQLException {
-	    String query = "SELECT a.CodAvion, a.Fabricante, a.Modelo, a.Precio, r.fechaIda, r.fechaVuelta, " +
-		                   "CASE " +
-			                   "WHEN r.FechaIda IS NULL THEN 'Disponible' " +
-			                   "ELSE 'Reservado' " +
-		                   "END AS EstadoReserva " +
+	    String query = "SELECT a.CodAvion, a.Fabricante, a.Modelo, a.Precio AS Precio_dia, r.fechaIda, r.fechaVuelta, " +
+		               "IFNULL(r.FechaIda, 'Disponible') AS EstadoReserva " +
 	                   "FROM Avion a " +
 	                   "LEFT JOIN Reserva r ON a.CodAvion = r.CodAvion";
 
