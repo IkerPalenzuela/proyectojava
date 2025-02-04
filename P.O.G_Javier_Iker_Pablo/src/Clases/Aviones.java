@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Aviones {
 
+<<<<<<< HEAD
 	// Atributos
 	protected String fabricante;
 	protected String  modelo;
@@ -14,7 +15,7 @@ public class Aviones {
 	// Constructor 
 <<<<<<< HEAD
 	public Aviones(String fabricante, String modelo, Double millas2) {
-		this.fabricante = fabricante;
+		this.fabricante = fabricante;kk  
 		this.modelo = modelo;
 		this.millas = millas2;
 =======
@@ -43,46 +44,101 @@ public class Aviones {
 	 public void asignarHangar(Hangar hangar) {
 		 this.hangar = hangar;
 	 }
+=======
+    // Atributos
+    protected int codigo;
+    protected String fabricante;
+    protected String modelo;
+    protected double millas;
+    protected ArrayList<Reserva> reserva;
+    protected double precio;
+    protected Hangar hangar;
+>>>>>>> branch 'master' of https://github.com/IkerPalenzuela/proyectojava.git
 
-	 // Getters & Setters
-	 public String getFabricante() {
-		return fabricante;
-	}
+    // Constructor
+    public Aviones(int codigo, String fabricante, String modelo, double precio, double millas) {
+        this.codigo = codigo;
+        this.fabricante = fabricante;
+        this.modelo = modelo;
+        this.millas = millas;
+        this.reserva = new ArrayList<>();
+        this.precio = precio;
+        this.hangar = null;
+    }
 
-	public void setFabricante(String fabricante) {
-		this.fabricante = fabricante;
-	}
+    // Métodos
+    public void agregarReserva(Reserva reserva) {
+        this.reserva.add(reserva); 
+    }
 
-	public String getModelo() {
-		return modelo;
-	}
+    public void eliminarReserva(Reserva reserva) {
+        this.reserva.remove(reserva);
+    }
 
-	public void setModelo(String modelo) {
-		this.modelo = modelo;
-	}
+    public ArrayList<Reserva> obtenerReservas() {
+        return reserva;
+    }
 
-	public Double getMillas() {
-		return millas;
-	}
+    public void asignarHangar(Hangar hangar) {
+        this.hangar = hangar;
+    }
 
-	public void setMillas(Double millas) {
-		this.millas = millas;
-	}
+    // Getters & Setters
+    public int getCodigo() {
+        return codigo;
+    }
 
-	public Hangar getHangar() {
-		return hangar;
-	}
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
 
-	public void setHangar(Hangar hangar) {
-		this.hangar = hangar;
-	}
+    public String getFabricante() {
+        return fabricante;
+    }
 
-	// toString
-	@Override
+    public void setFabricante(String fabricante) {
+        this.fabricante = fabricante;
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public double getPrecio() {
+    	return precio;
+    }
+    
+    public void setPrecio(double precio) {
+    	this.precio = precio;
+    }
+    public double getMillas() {
+        return millas;
+    }
+
+    public void setMillas(double millas) {
+        this.millas = millas;
+    }
+
+    public Hangar getHangar() {
+        return hangar;
+    }
+
+    public void setHangar(Hangar hangar) {
+        this.hangar = hangar;
+    }
+
+    // toString
+    @Override
 	public String toString() {
-		return "Aviones [fabricante=" + fabricante + ", modelo=" + modelo + ", millas=" + millas + ", hangar=" + hangar
-				+ "]";
+		return "Aviones [codigo=" + codigo + ", fabricante=" + fabricante + ", modelo=" + modelo + ", millas=" + millas
+				+ ", reserva=" + reserva + ", precio=" + precio + ", hangar=" + hangar + ", obtenerReservas()="
+				+ obtenerReservas() + ", getCodigo()=" + getCodigo() + ", getFabricante()=" + getFabricante()
+				+ ", getModelo()=" + getModelo() + ", getprecio()=" + getPrecio() + ", getMillas()=" + getMillas()
+				+ ", getHangar()=" + getHangar() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
 	}
-		
-	
 }

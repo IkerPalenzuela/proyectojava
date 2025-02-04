@@ -6,14 +6,14 @@ public class Reserva {
 
     private int idReserva;
     private String dni;
-    private String codAvion;
+    private int codAvion;
     private String fechaIda;
     private String fechaVuelta;
 
     private static ArrayList<Reserva> reservas = new ArrayList<>();
 
     // Constructor
-    public Reserva(int idReserva, String dni, String codAvion, String fechaIda, String fechaVuelta) {
+    public Reserva(int idReserva, String dni, int codAvion, String fechaIda, String fechaVuelta) {
         this.idReserva = idReserva;
         this.dni = dni;
         this.codAvion = codAvion;
@@ -21,6 +21,13 @@ public class Reserva {
         setFechaVuelta(fechaVuelta);
     }
 
+    public Reserva(int idReserva) {
+    	this.idReserva = idReserva;
+    	this.dni = null;
+    	this.codAvion = 0;
+    	this.fechaIda = null;
+    	this.fechaVuelta = null;
+    }
     // Getters & Setters
     public int getIdReserva() {
         return idReserva;
@@ -44,11 +51,11 @@ public class Reserva {
         this.dni = dni;
     }
 
-    public String getCodAvion() {
+    public int getCodAvion() {
         return codAvion;
     }
 
-    public void setCodAvion(String codAvion) {
+    public void setCodAvion(int codAvion) {
         this.codAvion = codAvion;
     }
 

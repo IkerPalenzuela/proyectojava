@@ -1,6 +1,7 @@
 package Gestiones;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import java.sql.*;
 import Clases.ConectorBD;
 import Clases.Aviones;
@@ -43,36 +44,163 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+=======
+import java.sql.*;
+import java.util.Scanner;
+>>>>>>> branch 'master' of https://github.com/IkerPalenzuela/proyectojava.git
 import Clases.Aviones;
+import Clases.Carga;
+import Clases.ConectorBD;
+import Clases.Pasajeros;
+import Clases.Hangar;
 
 public class GestionAviones {
-
-	// Metodo para consultar aviones
-	public static void consultarTodosLosAvioness(Aviones avion) throws SQLException {
-			System.out.println("\nLista de todos los aviones");
-			String query = "SELECT * FROM avion";
-			
-			try (Statement statement = getConexion.createStatement(); ResultSet resultSet = statement.executeQuery(query)){
-				// Verificamos si hay aviones para poder mostrar
-				if(!resultSet.isBeforeFirst()) {
-					System.out.println("No se encontraron aviones para poder mostrar en la base de datos");
-				}else {
-					while(resultSet.next()) {
-						String fabricante = resultSet.getString("Fabricante");
-	    				String modelo = resultSet.getString("Modelo");
-	    				double millas = resultSet.getDouble("Millas");
-	    				String hangar = resultSet.getString("Hangar");
-	    				
-	    				// Imprimimos la informacion del avion
-	    				System.out.println("Fabricante: " + fabricante + 
-	    						", Modelo: " + modelo + 
-	    						", Millas: " + millas + 
-	    						", Hangar: " + hangar);
-					}
+	
+	// Metodo para mostrar los hangares
+	public static void mostrarHangares() throws SQLException{
+		String query = "SELECT * FROM hangar";
+				
+		try (Statement statement = ConectorBD.getConexion().createStatement();
+	             ResultSet resultSet = statement.executeQuery(query)) {
+			if(!resultSet.isBeforeFirst()) {
+				System.out.println("No hay ningun hangar para mostrar");
+			}else {
+				while(resultSet.next()) {
+					String idHangar = resultSet.getString("idHangar");
+					int capacidadAviones = resultSet.getInt("CapacidaAviones");
+					String localidad = resultSet.getString("Localidad");
+					
+					System.out.println("IdHangar: " + idHangar +
+									    ", Capacidad de aviones: " + capacidadAviones + 
+									    ", Localidad: " + localidad);
 				}
-			}catch (SQLException e) {
-				System.out.println("Error al consultar los aviones: " + e.getMessage());
 			}
+		}catch(SQLException e) {
+			System.out.println("Error al consultar los hangares: " + e.getMessage());
+		}
 	}
+<<<<<<< HEAD
+>>>>>>> branch 'master' of https://github.com/IkerPalenzuela/proyectojava.git
+=======
+	
+	
+    // Método para consultar los aviones disponibles
+	public static void consultarAvionesDisponibles() throws SQLException {
+	    String query = "SELECT a.CodAvion, a.Fabricante, a.Modelo, a.Precio, r.fechaIda, r.fechaVuelta, " +
+		                   "CASE " +
+			                   "WHEN r.FechaIda IS NULL THEN 'Disponible' " +
+			                   "ELSE 'Reservado' " +
+		                   "END AS EstadoReserva " +
+	                   "FROM Avion a " +
+	                   "LEFT JOIN Reserva r ON a.CodAvion = r.CodAvion";
+
+        try (Statement statement = ConectorBD.getConexion().createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+
+            // Verificamos si hay aviones disponibles
+            if (!resultSet.isBeforeFirst()) {
+                System.out.println("No hay aviones disponibles en la base de datos.");
+            } else {
+                while (resultSet.next()) {
+                    // Obtenemos los datos del avión
+                    int codAvion = resultSet.getInt("CodAvion");
+                    String fabricante = resultSet.getString("Fabricante");
+                    String modelo = resultSet.getString("Modelo");
+                    String estado = resultSet.getString("EstadoReserva");
+
+                    // Mostramos los datos del avión
+                    System.out.println("CodAvion: " + codAvion + 
+                                       ", Fabricante: " + fabricante + 
+                                       ", Modelo: " + modelo + 
+                                       ", Estado: " + estado);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al consultar los aviones: " + e.getMessage());
+        }
+    }
+
+    // Método para reservar aviones
+    public static void reservarAviones() throws SQLException {
+        Scanner sc = new Scanner(System.in);
+
+        // Mostramos los aviones disponibles
+        System.out.println("\nSelecciona un avión:");
+        String query = "INSERT INTO Reserva (DNI, CodAvion, FechaIda, FechaVuelta) VALUES (?, ?, ?, ?, ?)";
+
+        try (Statement statement = ConectorBD.getConexion().createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+
+            // Verificamos si hay aviones disponibles
+            if (!resultSet.isBeforeFirst()) {
+                System.out.println("No hay aviones disponibles.");
+                return;
+            }
+
+            // Obtenemos los datos del avión
+            while (resultSet.next()) {
+                int codAvion = resultSet.getInt("CodAvion");
+                String fabricante = resultSet.getString("Fabricante");
+                String modelo = resultSet.getString("Modelo");
+
+                // Mostramos los datos del avión
+                System.out.println("CodAvion: " + codAvion +
+                                   ", Fabricante: " + fabricante + 
+                                   ", Modelo: " + modelo);
+            }
+
+            // Solicitamos al usuario que ponga el código del avión
+            System.out.print("\nIntroduce el código del avión que quieres seleccionar: ");
+            int codSeleccionado = sc.nextInt();
+            sc.nextLine();
+
+            resultSet.beforeFirst();  
+            boolean avionEncontrado = false;
+
+            while (resultSet.next()) {
+                if (resultSet.getInt("CodAvion") == codSeleccionado) {
+                    avionEncontrado = true;
+
+                    // Miramos si es un avión de carga o de pasajeros
+                    Aviones avion;
+                    String fabricante = resultSet.getString("Fabricante");
+                    String modelo = resultSet.getString("Modelo");
+                    double millas = resultSet.getDouble("Rango_millas");
+                    double precio = resultSet.getDouble("Precio");
+
+                    if (resultSet.getInt("Plazas") > 0) {
+                        int plazas = resultSet.getInt("Plazas");
+                        avion = new Pasajeros(codSeleccionado, fabricante, modelo, precio, millas, plazas);
+                    } else {
+                        double capacidad = resultSet.getDouble("Capacidad_kg");
+                        avion = new Carga(codSeleccionado, fabricante, modelo, precio, millas, capacidad);
+                    }
+
+                    // Mostramos la información del avión seleccionado
+                    System.out.println("\nAvión seleccionado:");
+                    System.out.println("Código: " + avion.getCodigo());
+                    System.out.println("Fabricante: " + avion.getFabricante());
+                    System.out.println("Modelo: " + avion.getModelo());
+                    System.out.println("Rango de Millas: " + avion.getMillas());
+                    System.out.println("Precio: " + avion.getPrecio());
+
+                    if (avion instanceof Pasajeros) {
+                        System.out.println("Plazas: " + ((Pasajeros) avion).getPlazas());
+                    } else if (avion instanceof Carga) {
+                        System.out.println("Capacidad de carga: " + ((Carga) avion).getCapacidad());
+                    }
+
+                    break;
+                }
+            }
+
+            if (!avionEncontrado) {
+                System.out.println("No se encontró un avión con el código proporcionado.");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al consultar los aviones: " + e.getMessage());
+        }
+    }
 >>>>>>> branch 'master' of https://github.com/IkerPalenzuela/proyectojava.git
 }
