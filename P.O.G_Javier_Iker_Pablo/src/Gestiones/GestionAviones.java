@@ -1,96 +1,17 @@
 package Gestiones;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-import java.sql.*;
-import Clases.ConectorBD;
-import Clases.Aviones;
-
-public class GestionAviones {
-
-    // Método para consultar aviones
-    public static void consultarTodosLosAviones() throws SQLException {
-        System.out.println("\nLista de todos los aviones");
-        String query = "SELECT * FROM avion";
-
-        // Usamos la conexión de la clase ConectorBD
-        try (Statement statement = ConectorBD.getConexion().createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
-
-            // Verificamos si hay aviones para poder mostrar
-            if (!resultSet.isBeforeFirst()) {
-                System.out.println("No se encontraron aviones para mostrar en la base de datos");
-            } else {
-                while (resultSet.next()) {
-                    String fabricante = resultSet.getString("Fabricante");
-                    String modelo = resultSet.getString("Modelo");
-                    double millas = resultSet.getDouble("Millas");
-                    String hangar = resultSet.getString("Hangar");
-
-                    // Imprimimos la información del avión
-                    System.out.println("Fabricante: " + fabricante +
-                            ", Modelo: " + modelo +
-                            ", Millas: " + millas +
-                            ", Hangar: " + hangar);
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println("Error al consultar los aviones: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-=======
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-=======
 import java.sql.*;
 import java.util.Scanner;
->>>>>>> branch 'master' of https://github.com/IkerPalenzuela/proyectojava.git
 import Clases.Aviones;
 import Clases.Carga;
 import Clases.ConectorBD;
 import Clases.Pasajeros;
-import Clases.Hangar;
 
-public class GestionAviones {
-	
-	// Metodo para mostrar los hangares
-	public static void mostrarHangares() throws SQLException{
-		String query = "SELECT * FROM hangar";
-				
-		try (Statement statement = ConectorBD.getConexion().createStatement();
-	             ResultSet resultSet = statement.executeQuery(query)) {
-			if(!resultSet.isBeforeFirst()) {
-				System.out.println("No hay ningun hangar para mostrar");
-			}else {
-				while(resultSet.next()) {
-					String idHangar = resultSet.getString("idHangar");
-					int capacidadAviones = resultSet.getInt("CapacidaAviones");
-					String localidad = resultSet.getString("Localidad");
-					
-					System.out.println("IdHangar: " + idHangar +
-									    ", Capacidad de aviones: " + capacidadAviones + 
-									    ", Localidad: " + localidad);
-				}
-			}
-		}catch(SQLException e) {
-			System.out.println("Error al consultar los hangares: " + e.getMessage());
-		}
-	}
-<<<<<<< HEAD
->>>>>>> branch 'master' of https://github.com/IkerPalenzuela/proyectojava.git
-=======
-	
-	
+public class GestionAviones{	
     // Método para consultar los aviones disponibles
 	public static void consultarAvionesDisponibles() throws SQLException {
-	    String query = "SELECT a.CodAvion, a.Fabricante, a.Modelo, a.Precio, r.fechaIda, r.fechaVuelta, " +
-		                   "CASE " +
-			                   "WHEN r.FechaIda IS NULL THEN 'Disponible' " +
-			                   "ELSE 'Reservado' " +
-		                   "END AS EstadoReserva " +
+	    String query = "SELECT a.CodAvion, a.Fabricante, a.Modelo, a.Precio AS Precio_dia, r.fechaIda, r.fechaVuelta, " +
+		               "IFNULL(r.FechaIda, 'Disponible') AS EstadoReserva " +
 	                   "FROM Avion a " +
 	                   "LEFT JOIN Reserva r ON a.CodAvion = r.CodAvion";
 
@@ -202,5 +123,4 @@ public class GestionAviones {
             System.out.println("Error al consultar los aviones: " + e.getMessage());
         }
     }
->>>>>>> branch 'master' of https://github.com/IkerPalenzuela/proyectojava.git
 }

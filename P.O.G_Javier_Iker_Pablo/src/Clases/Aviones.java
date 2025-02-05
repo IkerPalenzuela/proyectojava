@@ -4,47 +4,6 @@ import java.util.ArrayList;
 
 public class Aviones {
 
-<<<<<<< HEAD
-	// Atributos
-	protected String fabricante;
-	protected String  modelo;
-	protected Double millas;
-	protected ArrayList<Reserva> reserva;
-	protected Hangar hangar;
-	
-	// Constructor 
-<<<<<<< HEAD
-	public Aviones(String fabricante, String modelo, Double millas2) {
-		this.fabricante = fabricante;kk  
-		this.modelo = modelo;
-		this.millas = millas2;
-=======
-	public Aviones(String fabricante, String modelo, Double millas) {
-		this.fabricante = fabricante;
-		this.modelo = modelo;
-		this.millas = millas;
->>>>>>> branch 'master' of https://github.com/IkerPalenzuela/proyectojava.git
-		this.reserva = new ArrayList <>();
-		this.hangar = null;	
-	}
-	
-	// Metodos
-	public void agregarReserva(Reserva reserva) {
-		Reserva.add(reserva);
-	}
-	
-	public void eliminarReserva(Reserva reserva) {
-		Reserva.remove(reserva);
-	}
-	
-	public ArrayList<Reserva> obtenerReservas(){
-		return reserva;
-	}
-	
-	 public void asignarHangar(Hangar hangar) {
-		 this.hangar = hangar;
-	 }
-=======
     // Atributos
     protected int codigo;
     protected String fabricante;
@@ -53,7 +12,6 @@ public class Aviones {
     protected ArrayList<Reserva> reserva;
     protected double precio;
     protected Hangar hangar;
->>>>>>> branch 'master' of https://github.com/IkerPalenzuela/proyectojava.git
 
     // Constructor
     public Aviones(int codigo, String fabricante, String modelo, double precio, double millas) {

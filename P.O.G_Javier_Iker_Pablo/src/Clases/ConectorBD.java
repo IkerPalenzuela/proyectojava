@@ -6,16 +6,6 @@ public class ConectorBD {
 
     public static Connection conexion;
     
-<<<<<<< HEAD
-    public static Connection getConexion() {
-		return conexion;
-	}
-
-	public static void setConexion(Connection conexion) {
-		ConectorBD.conexion = conexion;
-	}
-           public static void conectar() throws SQLException, ClassNotFoundException{
-=======
     // Getter & Setter
 	public static Connection getConexion() {
 		return conexion;
@@ -28,7 +18,6 @@ public class ConectorBD {
 	
     public static void conectar() throws SQLException, ClassNotFoundException {
            
->>>>>>> branch 'master' of https://github.com/IkerPalenzuela/proyectojava.git
     	try {
              // Cargamos el driver, el driver es la libreria que nos permite conectarnos a la BD
             Class.forName("com.mysql.cj.jdbc.Driver");
