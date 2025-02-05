@@ -1,72 +1,39 @@
 package Menus;
 
-import java.util.Scanner;
 import Gestiones.GestionHangares;
+import java.util.Scanner;
 
 public class MenuCliente {
-    private Scanner sc;
 
+    private Scanner scanner;
+
+    // Constructor
     public MenuCliente() {
-        this.sc = new Scanner(System.in);
+        scanner = new Scanner(System.in);
+        seleccionarHangar();
     }
 
-    public int mostrarMenuCliente() {
-        System.out.println("\nMenuCliente: ");
-        System.out.println("1. Hangares");
-        System.out.println("2. Aviones");
-        System.out.println("3. Salir");
-        return leerEntero();
-    }
+    public void seleccionarHangar() {
+        try {
+            // Pedimos al usuario que seleccione un hangar
+            System.out.println("Obteniendo lista de hangares disponibles...");
+            GestionHangares gestionHangares = new GestionHangares();
+            gestionHangares.mostrarHangaresDisponibles(); // Llamar al método para mostrar hangares
 
-    public int leerEntero() {
-        while (true) {
-            try {
-                return Integer.parseInt(sc.nextLine());
-            } catch (NumberFormatException e) {
-                System.out.println("Número no válido. Por favor, introduce un número válido.");
-            }
+            // Ahora pedimos el ID del hangar
+            System.out.print("Introduce el ID del hangar que deseas consultar: ");
+            String idHangar = scanner.nextLine();
+
+            // Llamamos al método de GestionHangares pasando el ID del hangar
+            gestionHangares.mostrarAvionesEnHangar(idHangar);
+
+        } catch (Exception e) {
+            System.out.println("Error al obtener los hangares: " + e.getMessage());
         }
     }
 
-    public void menuClientes() {
-        boolean salir = false;
-
-        while (!salir) {
-            int opcion = mostrarMenuCliente();
-
-            switch (opcion) {
-                case 1:
-                    try {
-                        GestionHangares gestionHangares = new GestionHangares();
-                        gestionHangares.mostrarHangares();
-                    } catch (Exception e) {
-                        System.out.println("Error al obtener los hangares: " + e.getMessage());
-                    }
-                    break;
-
-                case 2:
-                    try {
-                        MenuAviones menuAviones = new MenuAviones();
-                        menuAviones.mostrarMenuAviones();
-                    } catch (Exception e) {
-                        System.out.println("Error al obtener los aviones: " + e.getMessage());
-                    }
-                    break;
-
-                case 3:
-                    salir = true;
-                    break;
-
-                default:
-                    System.out.println("Opción no válida. Intenta nuevamente.");
-                    break;
-            }
-        }
-        sc.close();
-    }
-    
-    // Metodo para mostrar errores
-    public void mostrarErrotres(String mensaje) {
-    	System.out.println("Error:  " + mensaje);
+    // Método para mostrar errores
+    public void mostrarErrores(String mensaje) {
+        System.out.println("Error: " + mensaje);
     }
 }

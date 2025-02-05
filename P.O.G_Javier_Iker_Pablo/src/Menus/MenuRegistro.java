@@ -40,7 +40,7 @@ public class MenuRegistro {
                     if (rol != null) {
                         if (rol.equalsIgnoreCase("Cliente")) {
                             MenuCliente menuCliente = new MenuCliente(); 
-                            menuCliente.menuClientes(); 
+                            menuCliente.seleccionarHangar(); 
                         } else if (rol.equalsIgnoreCase("Administrador")) {
                              System.out.println("Bienvenido Administrador");
                         } else {

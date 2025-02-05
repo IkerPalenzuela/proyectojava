@@ -45,7 +45,7 @@ public class MenuAviones {
                     GestionAviones.consultarAvionesDisponibles();
                     break;
                 case 2:
-                    GestionAviones.reservarAviones();
+                    GestionAviones.reservarAvion();
                     break;
                 case 3: 
                     salir = true;

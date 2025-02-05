@@ -1,19 +1,16 @@
 package Gestiones;
 
 import java.sql.*;
-import java.util.Scanner;
-import Clases.Aviones;
-import Clases.Carga;
 import Clases.ConectorBD;
-import Clases.Pasajeros;
+import java.util.Scanner;
 
-public class GestionAviones{	
-    // Método para consultar los aviones disponibles
-	public static void consultarAvionesDisponibles() throws SQLException {
-	    String query = "SELECT a.CodAvion, a.Fabricante, a.Modelo, a.Precio AS Precio_dia, r.fechaIda, r.fechaVuelta, " +
-		               "IFNULL(r.FechaIda, 'Disponible') AS EstadoReserva " +
-	                   "FROM Avion a " +
-	                   "LEFT JOIN Reserva r ON a.CodAvion = r.CodAvion";
+public class GestionAviones {
+
+    public static void consultarAvionesDisponibles() throws SQLException {
+        String query = "SELECT a.CodAvion, a.Fabricante, a.Modelo, a.Precio AS Precio_dia, r.FechaIda, r.FechaVuelta, " +
+                       "IFNULL(r.FechaIda, 'Disponible') AS EstadoReserva " +
+                       "FROM Avion a " +
+                       "LEFT JOIN Reserva r ON a.CodAvion = r.CodAvion";
 
         try (Statement statement = ConectorBD.getConexion().createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
@@ -24,7 +21,7 @@ public class GestionAviones{
             } else {
                 while (resultSet.next()) {
                     // Obtenemos los datos del avión
-                    int codAvion = resultSet.getInt("CodAvion");
+                    String codAvion = resultSet.getString("CodAvion");
                     String fabricante = resultSet.getString("Fabricante");
                     String modelo = resultSet.getString("Modelo");
                     String estado = resultSet.getString("EstadoReserva");
@@ -41,13 +38,12 @@ public class GestionAviones{
         }
     }
 
-    // Método para reservar aviones
-    public static void reservarAviones() throws SQLException {
+    public static void reservarAvion() throws SQLException {
         Scanner sc = new Scanner(System.in);
+        System.out.println("Selecciona un avión:");
 
         // Mostramos los aviones disponibles
-        System.out.println("\nSelecciona un avión:");
-        String query = "INSERT INTO Reserva (DNI, CodAvion, FechaIda, FechaVuelta) VALUES (?, ?, ?, ?, ?)";
+        String query = "SELECT * FROM Avion";
 
         try (Statement statement = ConectorBD.getConexion().createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
@@ -60,57 +56,53 @@ public class GestionAviones{
 
             // Obtenemos los datos del avión
             while (resultSet.next()) {
-                int codAvion = resultSet.getInt("CodAvion");
+                String codAvion = resultSet.getString("CodAvion");
                 String fabricante = resultSet.getString("Fabricante");
                 String modelo = resultSet.getString("Modelo");
 
                 // Mostramos los datos del avión
-                System.out.println("CodAvion: " + codAvion +
-                                   ", Fabricante: " + fabricante + 
-                                   ", Modelo: " + modelo);
+                System.out.println("CodAvion: " + codAvion + ", Fabricante: " + fabricante + ", Modelo: " + modelo);
             }
 
             // Solicitamos al usuario que ponga el código del avión
             System.out.print("\nIntroduce el código del avión que quieres seleccionar: ");
-            int codSeleccionado = sc.nextInt();
-            sc.nextLine();
+            String codSeleccionado = sc.nextLine();
 
-            resultSet.beforeFirst();  
+            resultSet.beforeFirst();
             boolean avionEncontrado = false;
 
             while (resultSet.next()) {
-                if (resultSet.getInt("CodAvion") == codSeleccionado) {
+                if (resultSet.getString("CodAvion").equals(codSeleccionado)) {
                     avionEncontrado = true;
 
-                    // Miramos si es un avión de carga o de pasajeros
-                    Aviones avion;
+                    // Obtenemos los datos del avión seleccionado
                     String fabricante = resultSet.getString("Fabricante");
                     String modelo = resultSet.getString("Modelo");
-                    double millas = resultSet.getDouble("Rango_millas");
                     double precio = resultSet.getDouble("Precio");
-
-                    if (resultSet.getInt("Plazas") > 0) {
-                        int plazas = resultSet.getInt("Plazas");
-                        avion = new Pasajeros(codSeleccionado, fabricante, modelo, precio, millas, plazas);
-                    } else {
-                        double capacidad = resultSet.getDouble("Capacidad_kg");
-                        avion = new Carga(codSeleccionado, fabricante, modelo, precio, millas, capacidad);
-                    }
 
                     // Mostramos la información del avión seleccionado
                     System.out.println("\nAvión seleccionado:");
-                    System.out.println("Código: " + avion.getCodigo());
-                    System.out.println("Fabricante: " + avion.getFabricante());
-                    System.out.println("Modelo: " + avion.getModelo());
-                    System.out.println("Rango de Millas: " + avion.getMillas());
-                    System.out.println("Precio: " + avion.getPrecio());
+                    System.out.println("Código: " + codSeleccionado);
+                    System.out.println("Fabricante: " + fabricante);
+                    System.out.println("Modelo: " + modelo);
+                    System.out.println("Precio: " + precio);
 
-                    if (avion instanceof Pasajeros) {
-                        System.out.println("Plazas: " + ((Pasajeros) avion).getPlazas());
-                    } else if (avion instanceof Carga) {
-                        System.out.println("Capacidad de carga: " + ((Carga) avion).getCapacidad());
+                    // Realizamos la reserva
+                    System.out.print("\nIntroduce la fecha de ida (YYYY-MM-DD): ");
+                    String fechaIda = sc.nextLine();
+                    System.out.print("Introduce la fecha de vuelta (YYYY-MM-DD): ");
+                    String fechaVuelta = sc.nextLine();
+
+                    // Insertamos la reserva en la base de datos
+                    String insertQuery = "INSERT INTO Reserva (CodAvion, FechaIda, FechaVuelta) VALUES (?, ?, ?)";
+                    try (PreparedStatement preparedStatement = ConectorBD.getConexion().prepareStatement(insertQuery)) {
+                        preparedStatement.setString(1, codSeleccionado);
+                        preparedStatement.setString(2, fechaIda);
+                        preparedStatement.setString(3, fechaVuelta);
+                        preparedStatement.executeUpdate();
                     }
 
+                    System.out.println("Reserva realizada exitosamente.");
                     break;
                 }
             }
