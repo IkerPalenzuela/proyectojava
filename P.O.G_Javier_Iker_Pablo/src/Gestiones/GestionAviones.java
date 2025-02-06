@@ -65,7 +65,7 @@ public class GestionAviones {
             }
 
             // Solicitamos al usuario que ponga el código del avión
-            System.out.print("\nIntroduce el código del avión que quieres seleccionar: ");
+            System.out.print("\nIntroduce el código del avion que quieres alquilar: ");
             String codSeleccionado = sc.nextLine();
 
             resultSet.beforeFirst();
@@ -108,7 +108,7 @@ public class GestionAviones {
             }
 
             if (!avionEncontrado) {
-                System.out.println("No se encontró un avión con el código proporcionado.");
+                System.out.println("Código del avion no es válido. Intentalo de nuevo.");
             }
 
         } catch (SQLException e) {

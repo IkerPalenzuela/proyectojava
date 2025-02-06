@@ -9,20 +9,41 @@ public class GestionUsuarios {
     // Método para registrar un usuario
     public static void registrarUsuario() {
         Scanner sc = new Scanner(System.in);
+        String dni, nombre, apellido, empresa, rol, contrasena;
 
-        System.out.println("\nRegistro de usuario");
-        System.out.print("Introduce tu DNI: ");
-        String dni = sc.nextLine();
+        System.out.println("\nRegistrar usuario");
+
+        // Validación del DNI
+        while (true) {
+            System.out.print("Introduce tu DNI (8 números + 1 letra): ");
+            dni = sc.nextLine();
+            if (dni.matches("\\d{8}[A-Za-z]")) {
+                break;
+            }
+            System.out.println("DNI no válido. Por favor, intentalo de nuevo.");
+        }
+
         System.out.print("Introduce tu nombre: ");
-        String nombre = sc.nextLine();
+        nombre = sc.nextLine();
+
         System.out.print("Introduce tu apellido: ");
-        String apellido = sc.nextLine();
-        System.out.print("Introduce tu empresa: ");
-        String empresa = sc.nextLine();
-        System.out.print("Introduce tu rol: ");
-        String rol = sc.nextLine();
+        apellido = sc.nextLine();
+
+        System.out.print("Introduce tu empresa (puede ser nulo): ");
+        empresa = sc.nextLine();
+
+        // Validación del rol
+        while (true) {
+            System.out.print("Introduce tu rol (administrador o cliente): ");
+            rol = sc.nextLine().toLowerCase();
+            if (rol.equals("administrador") || rol.equals("cliente")) {
+                break;
+            }
+            System.out.println("Rol no válido. El rol debe ser 'administrador' o 'cliente'.");
+        }
+
         System.out.print("Introduce tu contraseña: ");
-        String contrasena = sc.nextLine();
+        contrasena = sc.nextLine();
 
         String query = "INSERT INTO Usuarios (DNI, Nombre, Apellido, Empresa, Rol, Contrasena) VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -36,47 +57,48 @@ public class GestionUsuarios {
             
             int filasAfectadas = preparedStatement.executeUpdate();
             if (filasAfectadas > 0) {
-                System.out.println("Usuario registrado correctamente.");
+                System.out.println("El usuario se ha registrado correctamente");
             } else {
-                System.out.println("No se pudo registrar el usuario.");
+                System.out.println("No se ha podido registrar el usuario.");
             }
         } catch (SQLException e) {
             System.out.println("Error al registrar el usuario: " + e.getMessage());
         }
     }
 
-    // Método para iniciar sesión
+    // Método para iniciar sesión con validación
     public static String iniciarSesion() {
         Scanner sc = new Scanner(System.in);
+        String nombre, contrasena;
 
         System.out.println("\nIniciar sesión");
 
-        System.out.print("Ingrese su nombre: ");
-        String nombre = sc.nextLine();
+        while (true) {
+            System.out.print("Pon el nombre: ");
+            nombre = sc.nextLine();
 
-        System.out.print("Ingrese su contraseña: ");
-        String contrasena = sc.nextLine();
+            System.out.print("Pon la contraseña: ");
+            contrasena = sc.nextLine();
 
-        String query = "SELECT Rol FROM Usuarios WHERE Nombre = ? AND Contrasena = ?";
+            String query = "SELECT Rol FROM Usuarios WHERE Nombre = ? AND Contrasena = ?";
 
-        try (PreparedStatement statement = ConectorBD.getConexion().prepareStatement(query)) {
-            statement.setString(1, nombre);
-            statement.setString(2, contrasena);
+            try (PreparedStatement statement = ConectorBD.getConexion().prepareStatement(query)) {
+                statement.setString(1, nombre);
+                statement.setString(2, contrasena);
 
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    String rol = resultSet.getString("Rol");
-                    System.out.println(" Inicio de sesión exitoso. Rol: " + rol);
-                    return rol; 
-                } else {
-                    System.out.println("El nombre o la contraseña son incorrectos. Intente de nuevo.");
-                    return null;
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    if (resultSet.next()) {
+                        String rol = resultSet.getString("Rol");
+                        System.out.println("Inicio de sesion correcto. El rol es: " + rol);
+                        return rol; 
+                    } else {
+                        System.out.println("El nombre o la contraseña son incorrectos. Inténtelo de nuevo.");
+                    }
                 }
+            } catch (SQLException e) {
+                System.out.println("Error al iniciar sesión: " + e.getMessage());
+                return null;
             }
-        } catch (SQLException e) {
-            System.out.println("Error al iniciar sesión: " + e.getMessage());
-            return null;
         }
     }
-
 }

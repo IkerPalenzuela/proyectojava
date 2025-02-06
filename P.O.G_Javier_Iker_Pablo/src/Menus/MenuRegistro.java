@@ -9,7 +9,7 @@ public class MenuRegistro {
 
     public static int mostrarMenuRegistro() {
         System.out.println("\nMenu de registro");
-        System.out.println("1. Registrate");
+        System.out.println("1. Registrarse");
         System.out.println("2. Iniciar sesión");
         System.out.println("3. Salir");
         return leerEntero();
