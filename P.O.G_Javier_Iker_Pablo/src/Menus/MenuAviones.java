@@ -42,7 +42,7 @@ public class MenuAviones {
             
             switch(opcion) {
                 case 1: 
-                    GestionAviones.consultarAvionesDisponibles();
+                    GestionAviones.mostrarAvionesDisponibles();
                     break;
                 case 2:
                     GestionAviones.reservarAvion();

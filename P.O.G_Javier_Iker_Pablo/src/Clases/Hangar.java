@@ -4,13 +4,13 @@ import java.util.ArrayList;
 public class Hangar {
 
 	// Atributos
-	private String idHangar;
+	private int idHangar;
 	private int capacidadAviones;
 	private String localidad;
 	private ArrayList<Aviones> aviones;
 	
 	// Constructor
-	public Hangar(String idHangar, int capacidadAviones, String localidad, ArrayList<Aviones> aviones) {
+	public Hangar(int idHangar, int capacidadAviones, String localidad, ArrayList<Aviones> aviones) {
 		this.idHangar = idHangar;
 		this.capacidadAviones = capacidadAviones;
 		this.localidad = localidad;
@@ -33,11 +33,11 @@ public class Hangar {
 		avion.asignarHangar(null);
 	}
 
-	public String getIdHangar() {
+	public int getIdHangar() {
 		return idHangar;
 	}
 
-	public void setIdHangar(String idHangar) {
+	public void setIdHangar(int idHangar) {
 		this.idHangar = idHangar;
 	}
 

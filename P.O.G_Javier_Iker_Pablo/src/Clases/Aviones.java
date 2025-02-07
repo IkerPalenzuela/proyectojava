@@ -11,7 +11,7 @@ public class Aviones {
     protected double millas;
     protected ArrayList<Reserva> reserva;
     protected double precio;
-    protected Hangar hangar;
+    protected Hangar idHangar;
 
     // Constructor
     public Aviones(int codigo, String fabricante, String modelo, double precio, double millas) {
@@ -21,7 +21,7 @@ public class Aviones {
         this.millas = millas;
         this.reserva = new ArrayList<>();
         this.precio = precio;
-        this.hangar = null;
+        this.idHangar = null;
     }
 
     // Métodos
@@ -38,7 +38,7 @@ public class Aviones {
     }
 
     public void asignarHangar(Hangar hangar) {
-        this.hangar = hangar;
+        this.idHangar = hangar;
     }
 
     // Getters & Setters
@@ -81,22 +81,22 @@ public class Aviones {
         this.millas = millas;
     }
 
-    public Hangar getHangar() {
-        return hangar;
+    public Hangar getIdHangar() {
+        return idHangar;
     }
 
-    public void setHangar(Hangar hangar) {
-        this.hangar = hangar;
+    public void setIdHangar(Hangar hangar) {
+        this.idHangar = hangar;
     }
 
     // toString
     @Override
 	public String toString() {
 		return "Aviones [codigo=" + codigo + ", fabricante=" + fabricante + ", modelo=" + modelo + ", millas=" + millas
-				+ ", reserva=" + reserva + ", precio=" + precio + ", hangar=" + hangar + ", obtenerReservas()="
+				+ ", reserva=" + reserva + ", precio=" + precio + ", hangar=" + idHangar + ", obtenerReservas()="
 				+ obtenerReservas() + ", getCodigo()=" + getCodigo() + ", getFabricante()=" + getFabricante()
 				+ ", getModelo()=" + getModelo() + ", getprecio()=" + getPrecio() + ", getMillas()=" + getMillas()
-				+ ", getHangar()=" + getHangar() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", getHangar()=" + getIdHangar() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
 				+ ", toString()=" + super.toString() + "]";
 	}
 }
