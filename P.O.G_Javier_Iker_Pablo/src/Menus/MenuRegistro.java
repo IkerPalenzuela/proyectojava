@@ -3,6 +3,8 @@ package Menus;
 import java.sql.*;
 import java.util.Scanner;
 import Gestiones.GestionUsuarios;
+import Menus.MenuCliente;
+import Menus.MenuAdministrador;
 
 public class MenuRegistro {
     private static Scanner sc = new Scanner(System.in);
@@ -39,10 +41,11 @@ public class MenuRegistro {
                     String rol = GestionUsuarios.iniciarSesion();
                     if (rol != null) {
                         if (rol.equalsIgnoreCase("Cliente")) {
-                            MenuCliente menuCliente = new MenuCliente(); 
-                            menuCliente.seleccionarHangar(); 
+                            MenuCliente menuCliente = new MenuCliente();
+                            menuCliente.seleccionarHangar();
                         } else if (rol.equalsIgnoreCase("Administrador")) {
-                             System.out.println("Bienvenido Administrador");
+                            MenuAdministrador menuAdministrador = new MenuAdministrador();
+                            menuAdministrador.mostrarMenuAdministrador();
                         } else {
                             System.out.println("Rol desconocido");
                         }
@@ -63,6 +66,6 @@ public class MenuRegistro {
 
     // Metodo para mostrar errores
     public void mostrarErrores(String mensaje) {
-    	System.out.println("Error: " + mensaje);
+        System.out.println("Error: " + mensaje);
     }
 }

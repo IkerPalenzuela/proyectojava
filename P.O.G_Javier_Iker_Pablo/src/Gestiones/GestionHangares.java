@@ -1,6 +1,7 @@
 package Gestiones;
 
 import Clases.ConectorBD;
+import Clases.Hangar;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -106,7 +107,7 @@ public class GestionHangares {
                 System.out.print("Introduce tu DNI para la reserva (8 números + 1 letra): ");
                 dni = sc.nextLine();
 
-                // Verificación de DNI
+                // Verificamos que el DNI este bien escrito
                 if (dni.matches("\\d{8}[A-Za-z]") && verificarDniEnBaseDatos(dni)) {
                     break;
                 }
@@ -136,21 +137,18 @@ public class GestionHangares {
                     System.out.println("La fecha de vuelta no es válida. Por favor, intentalo de nuevo.");
                 }
 
-                // Verificar que la fecha de ida no sea posterior a la de vuelta
+                // Verificamos que la fecha de ida no sea posterior a la de vuelta
                 if (compararFechas(fechaIda, fechaVuelta)) {
                     System.out.println("La fecha de ida no puede ser posterior a la fecha de vuelta. Intenta nuevamente.");
                     continue;
                 }
 
-                // Verificar disponibilidad del avión
+                // Verificamos la disponivilidad del avion
                 if (verificarDisponibilidadAvion(codAvion, fechaIda, fechaVuelta)) {
                     realizarReserva(dni, codAvion, fechaIda, fechaVuelta);
                     System.out.println("Reserva realizada con éxito.");
-                    fechasValidas = true;
-
-                    // Mostrar los datos de la reserva
                     mostrarReserva(dni, codAvion, fechaIda, fechaVuelta);
-                    System.exit(0); // Finalizar el programa aquí después de mostrar los detalles
+                    System.exit(0);
 
                 } else {
                     System.out.println("El avión seleccionado ya está reservado en esas fechas. Por favor, ingresa otras fechas.");
@@ -161,13 +159,13 @@ public class GestionHangares {
         }
     }
 
-    // Verificación del DNI en la base de datos
+    // Metodo para verificar el dni en la BD
     private boolean verificarDniEnBaseDatos(String dni) throws SQLException {
         String query = "SELECT DNI FROM Usuarios WHERE DNI = ?";
         try (PreparedStatement preparedStatement = ConectorBD.getConexion().prepareStatement(query)) {
             preparedStatement.setString(1, dni);
             ResultSet resultSet = preparedStatement.executeQuery();
-            return resultSet.next(); // Si encuentra el DNI, devuelve true
+            return resultSet.next();
         }
     }
 
@@ -181,8 +179,8 @@ public class GestionHangares {
         }
     }
 
+    // Metodo para comparar las fechas
     private boolean compararFechas(String fechaIda, String fechaVuelta) {
-        // Comparar las fechas de ida y vuelta
         LocalDate fechaIdaDate = LocalDate.parse(fechaIda);
         LocalDate fechaVueltaDate = LocalDate.parse(fechaVuelta);
         return fechaIdaDate.isAfter(fechaVueltaDate);
@@ -194,7 +192,7 @@ public class GestionHangares {
     }
 
     // Metodo para realizar la reserva
-    private void realizarReserva(String dni, String codAvion, String fechaIda, String fechaVuelta) throws SQLException {
+    public static void realizarReserva(String dni, String codAvion, String fechaIda, String fechaVuelta) throws SQLException {
         GestionReservas.realizarReserva(dni, codAvion, fechaIda, fechaVuelta);
     }
     

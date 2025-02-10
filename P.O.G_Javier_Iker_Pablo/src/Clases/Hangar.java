@@ -27,12 +27,12 @@ public class Hangar {
 		}
 	}
 	
-	// Getters & Setters
 	public void eliminarAvion(Aviones avion) {
 		aviones.remove(avion);
 		avion.asignarHangar(null);
 	}
 
+	// Getters & Setters
 	public int getIdHangar() {
 		return idHangar;
 	}
@@ -64,7 +64,6 @@ public class Hangar {
 	// toString
 	@Override
 	public String toString() {
-		return "Hangar [idHangar=" + idHangar + ", capacidadAviones=" + capacidadAviones + ", localidad=" + localidad
-				+ "]";
+		return "Hangar [idHangar=" + idHangar + ", capacidadAviones=" + capacidadAviones + ", localidad=" + localidad + "]";
 	}
 }

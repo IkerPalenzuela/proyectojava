@@ -133,7 +133,7 @@ public class GestionUsuarios {
     				String apellido = resultSet.getString("Apellido");
     				String empresa = resultSet.getString("Empresa");
     				String rol = resultSet.getString("Rol");
-    				String contraseña = resultSet.getString("Contraseña");
+    				String contraseña = resultSet.getString("Contrasena");
     				
     				// Mostramos los datos del usuario
     				System.out.println("DNI: " + dni +

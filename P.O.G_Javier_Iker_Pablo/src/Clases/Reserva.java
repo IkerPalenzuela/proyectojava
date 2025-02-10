@@ -87,11 +87,11 @@ public class Reserva {
         }
     }
 
-    public static void add(Reserva reserva) {
+    public static void añadirReserva(Reserva reserva) {
         reservas.add(reserva);
     }
 
-    public static void remove(Reserva reserva) {
+    public static void eliminarReserva(Reserva reserva) {
         reservas.remove(reserva);
     }
 

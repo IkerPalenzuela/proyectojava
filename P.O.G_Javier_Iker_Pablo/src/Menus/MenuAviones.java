@@ -3,6 +3,7 @@ package Menus;
 import java.util.Scanner;
 import java.sql.*;
 import Gestiones.GestionAviones;
+import Gestiones.GestionHangares;
 
 public class MenuAviones {
 
@@ -39,15 +40,26 @@ public class MenuAviones {
 
         while(!salir) {
             int opcion = mostrarMenuAviones();
-            
+
             switch(opcion) {
-                case 1: 
+                case 1:
                     GestionAviones.mostrarAvionesDisponibles();
                     break;
                 case 2:
-                    GestionAviones.reservarAvion();
+                    // Aquí se recoge la información necesaria para la reserva
+                    System.out.println("Introduce el código del avión:");
+                    String codigoAvion = sc.nextLine();
+                    System.out.println("Introduce la fecha de ida (formato YYYY-MM-DD):");
+                    String fechaIda = sc.nextLine();
+                    System.out.println("Introduce la fecha de vuelta (formato YYYY-MM-DD):");
+                    String fechaVuelta = sc.nextLine();
+                    System.out.println("Introduce tu nombre (para la reserva):");
+                    String cliente = sc.nextLine();
+
+                    // Llamada al método de reserva con los parámetros necesarios
+                    GestionHangares.realizarReserva(codigoAvion, fechaIda, fechaVuelta, cliente);
                     break;
-                case 3: 
+                case 3:
                     salir = true;
                     break;
                 default:
