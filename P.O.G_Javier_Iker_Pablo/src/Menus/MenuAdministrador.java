@@ -121,7 +121,7 @@ public class MenuAdministrador {
                     }
                     break;
                 case 8:
-                    // Pedimos al administrador el id del avion para poder eliminarlo
+                    // Pedimos al administrador el id del avion para poder eliminarlos
                     System.out.print("Introduce el código del avión a eliminar: ");
                     int codigoAvionEliminar = sc.nextInt();
                     sc.nextLine();  // Consumir el salto de línea
