@@ -18,5 +18,5 @@ public class Pasajeros extends Aviones{
 	    public void setPlazas(int plazas) {
 	        this.plazas = plazas;
 	    }
-
+}
 
