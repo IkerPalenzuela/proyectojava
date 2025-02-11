@@ -2,7 +2,6 @@ package Menus;
 
 import java.sql.SQLException;
 import java.util.Scanner;
-
 import Gestiones.GestionAviones;
 import Gestiones.GestionReservas;
 import Gestiones.GestionUsuarios;
@@ -140,3 +139,4 @@ public class MenuAdministrador {
         } while (opcion != 9);
     }
 }
+

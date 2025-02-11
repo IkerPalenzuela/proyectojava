@@ -1,16 +1,22 @@
 package Gestiones;
 
 import Clases.ConectorBD;
+
 import Clases.Hangar;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.sql.*;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
+import java.util.Scanner;
+
+
 public class GestionHangares {
     private Scanner sc = new Scanner(System.in);
+
 
     // Metodo para mostrar los hangares disponibles
     public void mostrarHangaresDisponibles() throws SQLException {
@@ -206,3 +212,4 @@ public class GestionHangares {
         GestionReservas.consultarReservaUsuario(dni);
     }
 }
+

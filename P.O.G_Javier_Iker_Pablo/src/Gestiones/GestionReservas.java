@@ -26,7 +26,6 @@ public class GestionReservas {
             System.out.print("Fecha de vuelta no válida. Introduce la fecha de vuelta (YYYY-MM-DD): ");
             fechaVuelta = sc.nextLine();
         }
-
         // Verificación de la disponibilidad de la reserva
         if (verificarDisponibilidad(codAvion, fechaIda, fechaVuelta)) {
             String query = "INSERT INTO Reserva (DNI, CodAvion, FechaIda, FechaVuelta) VALUES (?, ?, ?, ?)";
