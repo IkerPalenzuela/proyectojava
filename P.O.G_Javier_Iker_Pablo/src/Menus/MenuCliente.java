@@ -18,7 +18,7 @@ public class MenuCliente {
             // Pedimos al usuario que seleccione un hangar
             System.out.println("Obteniendo lista de hangares disponibles...");
             GestionHangares gestionHangares = new GestionHangares();
-            gestionHangares.mostrarHangaresDisponibles(); // Llamar al método para mostrar hangares
+            gestionHangares.mostrarHangaresDisponibles(); // Llamamos al metodo de mostrar los hangares
 
             // Ahora pedimos el ID del hangar
             System.out.print("Introduce el ID del hangar que deseas consultar: ");
