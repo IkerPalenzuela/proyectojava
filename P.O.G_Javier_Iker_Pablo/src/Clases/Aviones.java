@@ -2,7 +2,7 @@ package Clases;
 
 import java.util.ArrayList;
 
-public class Aviones {
+public abstract class Aviones {
 
     // Atributos
     protected int codigo;
