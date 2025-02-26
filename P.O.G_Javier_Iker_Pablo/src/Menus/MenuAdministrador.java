@@ -5,6 +5,7 @@ import java.util.Scanner;
 import Gestiones.GestionAviones;
 import Gestiones.GestionReservas;
 import Gestiones.GestionUsuarios;
+import Clases.Aviones;
 import Clases.Reserva;
 
 public class MenuAdministrador {
@@ -114,7 +115,9 @@ public class MenuAdministrador {
                     System.out.print("Introduce el ID del hangar: ");
                     int idHangar = sc.nextInt();
                     try {
-                        GestionAviones.añadirAvion(codigo, fabricante, modelo, millas, precio, plazas, capacidad, idHangar);
+                    	
+                    	Aviones avion= new Aviones(codigo,fabricante,modelo,precio,millas, plazas, capacidad,idHangar);
+                        GestionAviones.añadirAvion(avion);
                     } catch (SQLException e) {
                         System.out.println("Error al añadir el avión: " + e.getMessage());
                     }

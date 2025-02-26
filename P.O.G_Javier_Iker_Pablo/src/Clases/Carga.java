@@ -7,7 +7,7 @@ public class Carga extends Aviones{
 	    // Constructor
 	    public Carga(int codigo, String fabricante, String modelo, double millas, double precio, double capacidad) {
 	        super(codigo, fabricante, modelo, millas, precio);
-	        setCapacidad(capacidad);
+	        this.capacidad = capacidad;
 	    }
 
 	    // Getters y Setters

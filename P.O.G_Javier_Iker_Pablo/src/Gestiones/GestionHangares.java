@@ -14,7 +14,7 @@ import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 
-public class GestionHangares {
+public class GestionHangares implements InterfazRepositorios<Hangar>{
     private Scanner sc = new Scanner(System.in);
 
 
@@ -211,5 +211,11 @@ public class GestionHangares {
     public void consultarReservaUsuario(String dni) throws SQLException {
         GestionReservas.consultarReservaUsuario(dni);
     }
+
+	@Override
+	public void insertar(Hangar hangar) {
+		// TODO Auto-generated method stub
+		
+	}
 }
 

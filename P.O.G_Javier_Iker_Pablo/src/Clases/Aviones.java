@@ -2,7 +2,7 @@ package Clases;
 
 import java.util.ArrayList;
 
-public abstract class Aviones {
+public  class Aviones {
 
     // Atributos
     protected int codigo;
@@ -11,20 +11,49 @@ public abstract class Aviones {
     protected double millas;
     protected ArrayList<Reserva> reserva;
     protected double precio;
-    protected Hangar idHangar;
+    protected Hangar hangar;
+    private int plazas;
+    private double capacidad;
+   
 
     // Constructor
-    public Aviones(int codigo, String fabricante, String modelo, double precio, double millas) {
+    public Aviones(int codigo, String fabricante, String modelo, double precio, double millas, int plazas, double capacidad, int idHangar) {
         this.codigo = codigo;
         this.fabricante = fabricante;
         this.modelo = modelo;
         this.millas = millas;
         this.reserva = new ArrayList<>();
         this.precio = precio;
-        this.idHangar = null;
+        this.capacidad=capacidad;
+        this.plazas=plazas;
+        hangar.setIdHangar(idHangar);
     }
 
-    // Métodos
+    public Hangar getHangar() {
+		return hangar;
+	}
+
+	public void setHangar(Hangar hangar) {
+		this.hangar = hangar;
+	}
+
+	public int getPlazas() {
+		return plazas;
+	}
+
+	public void setPlazas(int plazas) {
+		this.plazas = plazas;
+	}
+
+	public double getCapacidad() {
+		return capacidad;
+	}
+
+	public void setCapacidad(double capacidad) {
+		this.capacidad = capacidad;
+	}
+
+	// Métodos
     public void agregarReserva(Reserva reserva) {
         this.reserva.add(reserva); 
     }
@@ -38,7 +67,7 @@ public abstract class Aviones {
     }
 
     public void asignarHangar(Hangar hangar) {
-        this.idHangar = hangar;
+        this.hangar = hangar;
     }
 
     // Getters & Setters
@@ -81,22 +110,14 @@ public abstract class Aviones {
         this.millas = millas;
     }
 
-    public Hangar getIdHangar() {
-        return idHangar;
-    }
-
-    public void setIdHangar(Hangar hangar) {
-        this.idHangar = hangar;
-    }
-
     // toString
     @Override
 	public String toString() {
 		return "Aviones [codigo=" + codigo + ", fabricante=" + fabricante + ", modelo=" + modelo + ", millas=" + millas
-				+ ", reserva=" + reserva + ", precio=" + precio + ", hangar=" + idHangar + ", obtenerReservas()="
+				+ ", reserva=" + reserva + ", precio=" + precio + ", hangar=" + hangar + ", obtenerReservas()="
 				+ obtenerReservas() + ", getCodigo()=" + getCodigo() + ", getFabricante()=" + getFabricante()
 				+ ", getModelo()=" + getModelo() + ", getprecio()=" + getPrecio() + ", getMillas()=" + getMillas()
-				+ ", getHangar()=" + getIdHangar() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", getHangar()=" + getHangar() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
 				+ ", toString()=" + super.toString() + "]";
 	}
 }

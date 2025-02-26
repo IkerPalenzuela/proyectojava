@@ -5,22 +5,22 @@ import Clases.Aviones;
 import Clases.ConectorBD;
 import Clases.Hangar;
 
-public class GestionAviones {
+public class GestionAviones implements InterfazRepositorios<Aviones> {
 
     // Método para añadir aviones
-    public static void añadirAvion(int codigo, String fabricante, String modelo, double millas, double precio, int plazas, double capacidad, int idHangar) throws SQLException {
+    public static void añadirAvion(Aviones avion) throws SQLException {
         String query = "INSERT INTO Avion (CodAvion, Fabricante, Modelo, Rango_millas, Precio, Capacidad_kg, Plazas, IdHangar) " +
                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         
         try (PreparedStatement preparedStatement = ConectorBD.getConexion().prepareStatement(query)) {
-            preparedStatement.setInt(1, codigo);
-            preparedStatement.setString(2, fabricante);
-            preparedStatement.setString(3, modelo);
-            preparedStatement.setDouble(4, millas);
-            preparedStatement.setDouble(5, precio);
-            preparedStatement.setInt(6, plazas);
-            preparedStatement.setDouble(7, capacidad);
-            preparedStatement.setInt(8, idHangar);
+            preparedStatement.setInt(1, avion.getCodigo());
+            preparedStatement.setString(2, avion.getFabricante());
+            preparedStatement.setString(3, avion.getModelo());
+            preparedStatement.setDouble(4, avion.getMillas());
+            preparedStatement.setDouble(5, avion.getPrecio());
+            preparedStatement.setInt(6, avion.getPlazas());
+            preparedStatement.setDouble(7, avion.getCapacidad());
+            preparedStatement.setInt(8, avion.getIdHangar().getIdHangar());
             
             int filasAnadidas = preparedStatement.executeUpdate();
             if (filasAnadidas > 0) {
@@ -101,6 +101,35 @@ public class GestionAviones {
         }
         return false;
     }
+
+	@Override
+	public void insertar(Aviones avion) {
+		String query = "INSERT INTO Avion (CodAvion, Fabricante, Modelo, Rango_millas, Precio, Capacidad_kg, Plazas, IdHangar) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+ 
+ try (PreparedStatement preparedStatement = ConectorBD.getConexion().prepareStatement(query)) {
+     preparedStatement.setInt(1, avion.getCodigo());
+     preparedStatement.setString(2, avion.getFabricante());
+     preparedStatement.setString(3, avion.getModelo());
+     preparedStatement.setDouble(4, avion.getMillas());
+     preparedStatement.setDouble(5, avion.getPrecio());
+     preparedStatement.setInt(6, avion.getPlazas());
+     preparedStatement.setDouble(7, avion.getCapacidad());
+     preparedStatement.setInt(8, avion.getIdHangar().getIdHangar());
+     
+     int filasAnadidas = preparedStatement.executeUpdate();
+     if (filasAnadidas > 0) {
+         System.out.println("Avión añadido exitosamente.");
+         mostrarAvionesDisponibles();
+     } else {
+         System.out.println("Error al añadir el avión.");
+     }
+ } catch (SQLException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+}
+		
+	}
 
 } 
 
