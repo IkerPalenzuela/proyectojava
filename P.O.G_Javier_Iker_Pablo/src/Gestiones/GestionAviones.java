@@ -20,7 +20,7 @@ public class GestionAviones implements InterfazRepositorios<Aviones> {
             preparedStatement.setDouble(5, avion.getPrecio());
             preparedStatement.setInt(6, avion.getPlazas());
             preparedStatement.setDouble(7, avion.getCapacidad());
-            preparedStatement.setInt(8, avion.getIdHangar().getIdHangar());
+            preparedStatement.setInt(8, avion.getHangar().getIdHangar());
             
             int filasAnadidas = preparedStatement.executeUpdate();
             if (filasAnadidas > 0) {
@@ -115,7 +115,7 @@ public class GestionAviones implements InterfazRepositorios<Aviones> {
      preparedStatement.setDouble(5, avion.getPrecio());
      preparedStatement.setInt(6, avion.getPlazas());
      preparedStatement.setDouble(7, avion.getCapacidad());
-     preparedStatement.setInt(8, avion.getIdHangar().getIdHangar());
+     preparedStatement.setInt(8, avion.getHangar().getIdHangar());
      
      int filasAnadidas = preparedStatement.executeUpdate();
      if (filasAnadidas > 0) {

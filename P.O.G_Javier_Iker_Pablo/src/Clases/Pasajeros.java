@@ -6,7 +6,7 @@ public class Pasajeros extends Aviones{
 
 	    // Constructor
 	    public Pasajeros(int codigo, String fabricante, String modelo, double millas, double precio, int plazas) {
-	        super(codigo, fabricante, modelo, millas, precio);
+	        super(codigo, fabricante, modelo, millas, precio, plazas, precio, plazas);
 	        this.plazas= plazas;
 	    }
 
