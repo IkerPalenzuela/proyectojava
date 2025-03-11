@@ -117,7 +117,7 @@ public class GestionUsuarios {
     }
     
     // Metodo para consultar usuarios
-    public static void consultarUsuarios() throws SQLException{
+    public static void consultarUsuarios() {
     	String query = "SELECT * FROM Usuarios";
     	
     	try(PreparedStatement preparedStatement = ConectorBD.getConexion().prepareStatement(query);
@@ -145,7 +145,10 @@ public class GestionUsuarios {
     									", Contraseña: " + contraseña) ;
     			}
     		}
-    	}
+    	} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
     // Método para eliminar usuarios

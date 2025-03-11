@@ -10,7 +10,7 @@ public class GestionReservas {
     private static Scanner sc = new Scanner(System.in);
 
     // Metodo para hacer reserva con DNI
-    public static void realizarReserva(String dni, String codAvion, String fechaIda, String fechaVuelta) throws SQLException {
+    public static void realizarReserva(String dni, String codAvion, String fechaIda, String fechaVuelta) {
         while (!validarDni(dni)) {
             System.out.print("DNI no válido. Por favor ingresa un DNI válido (8 dígitos + 1 letra): ");
             dni = sc.nextLine();
@@ -27,27 +27,32 @@ public class GestionReservas {
             fechaVuelta = sc.nextLine();
         }
         // Verificación de la disponibilidad de la reserva
-        if (verificarDisponibilidad(codAvion, fechaIda, fechaVuelta)) {
-            String query = "INSERT INTO Reserva (DNI, CodAvion, FechaIda, FechaVuelta) VALUES (?, ?, ?, ?)";
-            
-            try (PreparedStatement preparedStatement = ConectorBD.getConexion().prepareStatement(query)) {
-                preparedStatement.setString(1, dni);
-                preparedStatement.setString(2, codAvion);
-                preparedStatement.setDate(3, Date.valueOf(fechaIda));
-                preparedStatement.setDate(4, Date.valueOf(fechaVuelta));
-                
-                int filasAfectadas = preparedStatement.executeUpdate();
-                if (filasAfectadas > 0) {
-                    System.out.println("Reserva realizada con éxito.");
-                    // Eliminamos esta llamada porque ya la hace mostrarDetallesYReservarAvion
-                    //mostrarReserva(dni, codAvion, fechaIda, fechaVuelta); 
-                } else {
-                    System.out.println("Error al realizar la reserva.");
-                }
-            }
-        } else {
-            System.out.println("El avión no está disponible en esas fechas. Intenta de nuevo con otras fechas.");
-        }
+        try {
+			if (verificarDisponibilidad(codAvion, fechaIda, fechaVuelta)) {
+			    String query = "INSERT INTO Reserva (DNI, CodAvion, FechaIda, FechaVuelta) VALUES (?, ?, ?, ?)";
+			    
+			    try (PreparedStatement preparedStatement = ConectorBD.getConexion().prepareStatement(query)) {
+			        preparedStatement.setString(1, dni);
+			        preparedStatement.setString(2, codAvion);
+			        preparedStatement.setDate(3, Date.valueOf(fechaIda));
+			        preparedStatement.setDate(4, Date.valueOf(fechaVuelta));
+			        
+			        int filasAfectadas = preparedStatement.executeUpdate();
+			        if (filasAfectadas > 0) {
+			            System.out.println("Reserva realizada con éxito.");
+			            // Eliminamos esta llamada porque ya la hace mostrarDetallesYReservarAvion
+			            //mostrarReserva(dni, codAvion, fechaIda, fechaVuelta); 
+			        } else {
+			            System.out.println("Error al realizar la reserva.");
+			        }
+			    }
+			} else {
+			    System.out.println("El avión no está disponible en esas fechas. Intenta de nuevo con otras fechas.");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     // Método para validar el DNI
@@ -66,7 +71,7 @@ public class GestionReservas {
     }
 
     // Método para verificar si el avión está disponible
-    private static boolean verificarDisponibilidad(String codAvion, String fechaIda, String fechaVuelta) throws SQLException {
+    private static boolean verificarDisponibilidad(String codAvion, String fechaIda, String fechaVuelta) {
         String query = "SELECT COUNT(*) FROM Reserva WHERE CodAvion = ? AND ((FechaIda <= ? AND FechaVuelta >= ?) OR (FechaIda <= ? AND FechaVuelta >= ?))";
         
         try (PreparedStatement preparedStatement = ConectorBD.getConexion().prepareStatement(query)) {
@@ -81,12 +86,15 @@ public class GestionReservas {
             if (resultSet.next()) {
                 return resultSet.getInt(1) == 0;
             }
-        }
+        } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         return false;
     }
 
     // Metodo para mostrar los datos de la reserva realizada
-    public static void mostrarReserva(String dni, String codAvion, String fechaIda, String fechaVuelta) throws SQLException {
+    public static void mostrarReserva(String dni, String codAvion, String fechaIda, String fechaVuelta) {
         String query = "SELECT u.Nombre, u.Apellido, a.Modelo, a.Precio, a.Capacidad_kg, a.Plazas FROM Usuarios u "
                      + "JOIN Reserva r ON u.DNI = r.DNI "
                      + "JOIN Avion a ON r.CodAvion = a.CodAvion "
@@ -118,11 +126,14 @@ public class GestionReservas {
             } else {
                 System.out.println("No se encontró la reserva en la base de datos.");
             }
-        }
+        } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     // Metodo para consultar las reservas de un usuario
-    public static void consultarReservaUsuario(String dni) throws SQLException {
+    public static void consultarReservaUsuario(String dni) {
         String query = "SELECT r.IdReserva, r.FechaIda, r.FechaVuelta, a.Modelo, a.Precio "
                      + "FROM Reserva r "
                      + "JOIN Avion a ON r.CodAvion = a.CodAvion "
@@ -151,11 +162,14 @@ public class GestionReservas {
                 System.out.println("Modelo del avión: " + modeloAvion);
                 System.out.println("Precio: " + precioAvion);
             }
-        }
+        } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
     // Método para modificar una reserva
-    public static void modificarReserva(Reserva reserva) throws SQLException {
+    public static void modificarReserva(Reserva reserva) {
         String query = "UPDATE Reserva SET FechaIda = ?, FechaVuelta = ?, DNI = ?, CodAvion = ? WHERE IdReserva = ?";
         
         try (PreparedStatement preparedStatement = ConectorBD.getConexion().prepareStatement(query)) {
@@ -172,11 +186,14 @@ public class GestionReservas {
             } else {
                 System.out.println("No se encontró la reserva con el ID proporcionado.");
             }
-        }
+        } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     // Método para eliminar una reserva
-    public static void eliminarReserva(Reserva reserva) throws SQLException {
+    public static void eliminarReserva(Reserva reserva) {
         String query = "DELETE FROM Reserva WHERE IdReserva = ?";
         
         try (PreparedStatement preparedStatement = ConectorBD.getConexion().prepareStatement(query)) {
@@ -189,11 +206,14 @@ public class GestionReservas {
             } else {
                 System.out.println("No se encontró la reserva con el ID proporcionado.");
             }
-        }
+        } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     // Metodo para eliminar todas las reservas con su ID AUTO_INCREMENT
-    public static void eliminarTodasLasReservas() throws SQLException {
+    public static void eliminarTodasLasReservas() {
         String query = "TRUNCATE TABLE reserva";
 
         try (PreparedStatement preparedStatement = ConectorBD.getConexion().prepareStatement(query)) {

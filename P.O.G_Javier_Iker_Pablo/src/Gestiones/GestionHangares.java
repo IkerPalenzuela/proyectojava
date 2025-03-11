@@ -19,7 +19,7 @@ public class GestionHangares implements InterfazRepositorios<Hangar>{
 
 
     // Metodo para mostrar los hangares disponibles
-    public void mostrarHangaresDisponibles() throws SQLException {
+    public void mostrarHangaresDisponibles() {
         String query = "SELECT * FROM Hangar";
 
         try (PreparedStatement preparedStatement = ConectorBD.getConexion().prepareStatement(query)) {
@@ -43,7 +43,7 @@ public class GestionHangares implements InterfazRepositorios<Hangar>{
     }
 
     // Metodo para mostrar los aviones que hay en el hangar seleccionado
-    public void mostrarAvionesEnHangar(String idHangar) throws SQLException {
+    public void mostrarAvionesEnHangar(String idHangar) {
         String query = "SELECT * FROM Avion WHERE IdHangar = ?";
         ArrayList<String> avionesValidos = new ArrayList<>();
 
@@ -85,7 +85,7 @@ public class GestionHangares implements InterfazRepositorios<Hangar>{
     }
 
     // Metodo para mostrar los detalles de la reserva del avion
-    public void mostrarDetallesYReservarAvion(String codAvion) throws SQLException {
+    public void mostrarDetallesYReservarAvion(String codAvion) {
         String query = "SELECT * FROM Avion WHERE CodAvion = ?";
 
         try (PreparedStatement preparedStatement = ConectorBD.getConexion().prepareStatement(query)) {
@@ -166,13 +166,16 @@ public class GestionHangares implements InterfazRepositorios<Hangar>{
     }
 
     // Metodo para verificar el dni en la BD
-    private boolean verificarDniEnBaseDatos(String dni) throws SQLException {
+    private boolean verificarDniEnBaseDatos(String dni) {
         String query = "SELECT DNI FROM Usuarios WHERE DNI = ?";
         try (PreparedStatement preparedStatement = ConectorBD.getConexion().prepareStatement(query)) {
             preparedStatement.setString(1, dni);
             ResultSet resultSet = preparedStatement.executeQuery();
             return resultSet.next();
-        }
+        } catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
     }
 
     // Metodo para ver si las fechas son validas
@@ -193,22 +196,22 @@ public class GestionHangares implements InterfazRepositorios<Hangar>{
     }
 
     // Metodo para ver si el avion esta disponible
-    private boolean verificarDisponibilidadAvion(String codAvion, String fechaIda, String fechaVuelta) throws SQLException {
+    private boolean verificarDisponibilidadAvion(String codAvion, String fechaIda, String fechaVuelta) {
         return GestionAviones.verificarDisponibilidadAvion(codAvion, fechaIda, fechaVuelta);
     }
 
     // Metodo para realizar la reserva
-    public static void realizarReserva(String dni, String codAvion, String fechaIda, String fechaVuelta) throws SQLException {
+    public static void realizarReserva(String dni, String codAvion, String fechaIda, String fechaVuelta){
         GestionReservas.realizarReserva(dni, codAvion, fechaIda, fechaVuelta);
     }
     
     // Metodo para mostrar los datos de la reserva realizada
-    private void mostrarReserva(String dni, String codAvion, String fechaIda, String fechaVuelta) throws SQLException {
+    private void mostrarReserva(String dni, String codAvion, String fechaIda, String fechaVuelta) {
     	GestionReservas.mostrarReserva(dni, codAvion, fechaIda, fechaVuelta);
     }
 
     // Metodo para consultar las reservas de un usuario
-    public void consultarReservaUsuario(String dni) throws SQLException {
+    public void consultarReservaUsuario(String dni)  {
         GestionReservas.consultarReservaUsuario(dni);
     }
 

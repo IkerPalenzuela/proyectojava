@@ -8,7 +8,7 @@ import Clases.Hangar;
 public class GestionAviones implements InterfazRepositorios<Aviones> {
 
     // Método para añadir aviones
-    public static void añadirAvion(Aviones avion) throws SQLException {
+    public static void añadirAvion(Aviones avion)  {
         String query = "INSERT INTO Avion (CodAvion, Fabricante, Modelo, Rango_millas, Precio, Capacidad_kg, Plazas, IdHangar) " +
                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         
@@ -29,11 +29,13 @@ public class GestionAviones implements InterfazRepositorios<Aviones> {
             } else {
                 System.out.println("Error al añadir el avión.");
             }
-        }
+        } catch (SQLException e) {
+			e.printStackTrace();
+		}
     }
 
     // Método para eliminar aviones
-    public static void eliminarAvion(int codigo) throws SQLException {
+    public static void eliminarAvion(int codigo) {
         String query = "DELETE FROM Avion WHERE CodAvion = ?";
         
         try (PreparedStatement preparedStatement = ConectorBD.getConexion().prepareStatement(query)) {
@@ -51,7 +53,7 @@ public class GestionAviones implements InterfazRepositorios<Aviones> {
     }
 
     // Método para consultar los aviones disponibles
-    public static void mostrarAvionesDisponibles() throws SQLException {
+    public static void mostrarAvionesDisponibles(){
         String query = "SELECT a.CodAvion, a.Fabricante, a.Modelo, a.Precio AS Precio_dia, r.FechaIda, r.FechaVuelta, " +
                        "IFNULL(r.FechaIda, 'Disponible') AS EstadoReserva " +
                        "FROM Avion a " +
@@ -81,7 +83,7 @@ public class GestionAviones implements InterfazRepositorios<Aviones> {
     }
 
     // Método para verificar la disponibilidad de un avión
-    public static boolean verificarDisponibilidadAvion(String codAvion, String fechaIda, String fechaVuelta) throws SQLException {
+    public static boolean verificarDisponibilidadAvion(String codAvion, String fechaIda, String fechaVuelta) {
         String query = "SELECT COUNT(*) FROM Reserva WHERE CodAvion = ? AND ((FechaIda <= ? AND FechaVuelta >= ?) OR (FechaIda <= ? AND FechaVuelta >= ?))";
 
         try (PreparedStatement preparedStatement = ConectorBD.getConexion().prepareStatement(query)) {
@@ -107,29 +109,26 @@ public class GestionAviones implements InterfazRepositorios<Aviones> {
 		String query = "INSERT INTO Avion (CodAvion, Fabricante, Modelo, Rango_millas, Precio, Capacidad_kg, Plazas, IdHangar) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
  
- try (PreparedStatement preparedStatement = ConectorBD.getConexion().prepareStatement(query)) {
-     preparedStatement.setInt(1, avion.getCodigo());
-     preparedStatement.setString(2, avion.getFabricante());
-     preparedStatement.setString(3, avion.getModelo());
-     preparedStatement.setDouble(4, avion.getMillas());
-     preparedStatement.setDouble(5, avion.getPrecio());
-     preparedStatement.setInt(6, avion.getPlazas());
-     preparedStatement.setDouble(7, avion.getCapacidad());
-     preparedStatement.setInt(8, avion.getHangar().getIdHangar());
-     
-     int filasAnadidas = preparedStatement.executeUpdate();
-     if (filasAnadidas > 0) {
-         System.out.println("Avión añadido exitosamente.");
-         mostrarAvionesDisponibles();
-     } else {
-         System.out.println("Error al añadir el avión.");
-     }
- } catch (SQLException e) {
-	// TODO Auto-generated catch block
-	e.printStackTrace();
-}
-		
+		 try (PreparedStatement preparedStatement = ConectorBD.getConexion().prepareStatement(query)) {
+		     preparedStatement.setInt(1, avion.getCodigo());
+		     preparedStatement.setString(2, avion.getFabricante());
+		     preparedStatement.setString(3, avion.getModelo());
+		     preparedStatement.setDouble(4, avion.getMillas());
+		     preparedStatement.setDouble(5, avion.getPrecio());
+		     preparedStatement.setInt(6, avion.getPlazas());
+		     preparedStatement.setDouble(7, avion.getCapacidad());
+		     preparedStatement.setInt(8, avion.getHangar().getIdHangar());
+		     
+		     int filasAnadidas = preparedStatement.executeUpdate();
+		     if (filasAnadidas > 0) {
+		         System.out.println("Avión añadido exitosamente.");
+		         mostrarAvionesDisponibles();
+		     } else {
+		         System.out.println("Error al añadir el avión.");
+		     }
+		 } catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
-
 } 
 

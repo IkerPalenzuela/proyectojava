@@ -11,7 +11,7 @@ import Clases.Reserva;
 public class MenuAdministrador {
     private static final Scanner sc = new Scanner(System.in);
 
-    public static void mostrarMenuAdministrador() {
+    public static void mostrarMenuAdministrador() throws SQLException {
         int opcion;
         do {
             System.out.println("\nMenú Administrador");
@@ -30,11 +30,7 @@ public class MenuAdministrador {
 
             switch (opcion) {
                 case 1:
-                    try {
-                        GestionUsuarios.consultarUsuarios();
-                    } catch (SQLException e) {
-                        System.out.println("Error al consultar usuarios: " + e.getMessage());
-                    }
+                	GestionUsuarios.consultarUsuarios();
                     break;
                 case 2:
                     try {
@@ -46,11 +42,7 @@ public class MenuAdministrador {
                 case 3:
                     System.out.print("Introduce el DNI del usuario para consultar sus reservas: ");
                     String dniConsulta = sc.nextLine();
-                    try {
-                        GestionReservas.consultarReservaUsuario(dniConsulta);
-                    } catch (SQLException e) {
-                        System.out.println("Error al consultar reservas: " + e.getMessage());
-                    }
+                    GestionReservas.consultarReservaUsuario(dniConsulta);
                     break;
                 case 4:
                     // Pedimos los datos al administrador para modificar la reserva
@@ -68,11 +60,7 @@ public class MenuAdministrador {
 
                     Reserva reserva = new Reserva(reservaId, dni, codAvion, fechaIda, fechaVuelta);
 
-                    try {
-                        GestionReservas.modificarReserva(reserva);
-                    } catch (SQLException e) {
-                        System.out.println("Error al modificar la reserva: " + e.getMessage());
-                    }
+                    GestionReservas.modificarReserva(reserva);
                     break;
                 case 5:
                     // Pedimos al administrador los datos para eliminar la reserva
@@ -82,18 +70,10 @@ public class MenuAdministrador {
 
                     Reserva reservaEliminar = new Reserva(idReservaEliminar);
 
-                    try {
-                        GestionReservas.eliminarReserva(reservaEliminar);
-                    } catch (SQLException e) {
-                        System.out.println("Error al eliminar la reserva: " + e.getMessage());
-                    }
+                    GestionReservas.eliminarReserva(reservaEliminar);
                     break;
                 case 6: 
-                	try {
-                		GestionReservas.eliminarTodasLasReservas();
-                	}catch (SQLException e) {
-                		System.out.println("Error al eliminar todas las reservas: " + e.getMessage());
-                	}
+                	GestionReservas.eliminarTodasLasReservas();
                 	break;
                 case 7:
                     // Pedimos al administrador los datos de un avion para añadir
@@ -114,24 +94,15 @@ public class MenuAdministrador {
                     double capacidad = sc.nextDouble();
                     System.out.print("Introduce el ID del hangar: ");
                     int idHangar = sc.nextInt();
-                    try {
-                    	
-                    	Aviones avion= new Aviones(codigo,fabricante,modelo,precio,millas, plazas, capacidad,idHangar);
-                        GestionAviones.añadirAvion(avion);
-                    } catch (SQLException e) {
-                        System.out.println("Error al añadir el avión: " + e.getMessage());
-                    }
+					Aviones avion= new Aviones(codigo,fabricante,modelo,precio,millas, plazas, capacidad,idHangar);
+					GestionAviones.añadirAvion(avion);
                     break;
                 case 8:
                     // Pedimos al administrador el id del avion para poder eliminarlos
                     System.out.print("Introduce el código del avión a eliminar: ");
                     int codigoAvionEliminar = sc.nextInt();
                     sc.nextLine();  // Consumir el salto de línea
-                    try {
-                        GestionAviones.eliminarAvion(codigoAvionEliminar);
-                    } catch (SQLException e) {
-                        System.out.println("Error al eliminar el avión: " + e.getMessage());
-                    }
+                    GestionAviones.eliminarAvion(codigoAvionEliminar);
                     break;
                 case 9:
                     System.out.println("Saliendo del menú administrador...");
