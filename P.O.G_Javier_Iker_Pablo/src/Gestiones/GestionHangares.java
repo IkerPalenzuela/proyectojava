@@ -217,7 +217,6 @@ public class GestionHangares implements InterfazRepositorios<Hangar>{
 
 	@Override
 	public void insertar(Hangar hangar) {
-		// TODO Auto-generated method stub
 		
 	}
 }

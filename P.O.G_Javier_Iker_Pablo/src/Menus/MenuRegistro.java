@@ -27,7 +27,7 @@ public class MenuRegistro {
         }
     }
 
-    public void menuRegistro() throws SQLException {
+    public void menuRegistro() {
         boolean salir = false;
 
         while (!salir) {
@@ -45,7 +45,12 @@ public class MenuRegistro {
                             menuCliente.seleccionarHangar();
                         } else if (rol.equalsIgnoreCase("Administrador")) {
                             MenuAdministrador menuAdministrador = new MenuAdministrador();
-                            menuAdministrador.mostrarMenuAdministrador();
+                            try {
+								menuAdministrador.mostrarMenuAdministrador();
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
                         } else {
                             System.out.println("Rol desconocido");
                         }

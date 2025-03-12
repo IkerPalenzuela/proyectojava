@@ -16,7 +16,7 @@ public class ConectorBD {
 	}
 	
 	
-    public static void conectar() throws SQLException, ClassNotFoundException {
+    public static void conectar(){
            
     	try {
              // Cargamos el driver, el driver es la libreria que nos permite conectarnos a la BD
@@ -41,8 +41,13 @@ public class ConectorBD {
     }
     
     // Metodo para cerrar la conexion
-    public static void cerrarConexion() throws SQLException {
-            conexion.close();
+    public static void cerrarConexion() {
+            try {
+				conexion.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             System.out.println("Conexión cerrada");
     }
 }

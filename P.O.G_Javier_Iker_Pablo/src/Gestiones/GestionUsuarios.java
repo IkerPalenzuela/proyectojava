@@ -152,7 +152,7 @@ public class GestionUsuarios {
     }
     
     // Método para eliminar usuarios
-    public static void eliminarUsuarios() throws SQLException {
+    public static void eliminarUsuarios() {
         System.out.print("Introduce el DNI del usuario a eliminar: ");
         String dni = sc.nextLine();
 

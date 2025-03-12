@@ -33,11 +33,7 @@ public class MenuAdministrador {
                 	GestionUsuarios.consultarUsuarios();
                     break;
                 case 2:
-                    try {
-                        GestionUsuarios.eliminarUsuarios();
-                    } catch (SQLException e) {
-                        System.out.println("Error al eliminar usuario: " + e.getMessage());
-                    }
+                	GestionUsuarios.eliminarUsuarios();
                     break;
                 case 3:
                     System.out.print("Introduce el DNI del usuario para consultar sus reservas: ");
