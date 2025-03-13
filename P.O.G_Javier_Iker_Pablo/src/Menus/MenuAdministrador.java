@@ -11,7 +11,7 @@ import Clases.Reserva;
 public class MenuAdministrador {
     private static final Scanner sc = new Scanner(System.in);
 
-    public static void mostrarMenuAdministrador() throws SQLException {
+    public static void mostrarMenuAdministrador() {
         int opcion;
         do {
             System.out.println("\nMenú Administrador");

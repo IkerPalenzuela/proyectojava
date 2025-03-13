@@ -45,12 +45,7 @@ public class MenuRegistro {
                             menuCliente.seleccionarHangar();
                         } else if (rol.equalsIgnoreCase("Administrador")) {
                             MenuAdministrador menuAdministrador = new MenuAdministrador();
-                            try {
-								menuAdministrador.mostrarMenuAdministrador();
-							} catch (SQLException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
+                            menuAdministrador.mostrarMenuAdministrador();
                         } else {
                             System.out.println("Rol desconocido");
                         }
